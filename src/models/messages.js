@@ -16,7 +16,8 @@ const MessageSchema = new Schema({
         required:true
     },
     "time":{
-        type:Date
+        type:Date,
+        required:true
     },
     "creae_at":{
         type:Date,
