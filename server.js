@@ -1,6 +1,7 @@
 import express from 'express';
 import mongoose from 'mongoose';
 import bodyParser from 'body-parser';
+import Message from './src/models/messages';
 
 
 const app = express();
@@ -12,6 +13,17 @@ db.on('error',()=> console.log("Error al conectar a la BD"))
     .once('open',() => console.log("Conectado a la BD!!"))
 
 app.use(bodyParser.json());
+
+app.post('/createMessage',(req,res) => {
+    let message = req.body
+    Message.create(message).then((message) => {
+        return res.status(201).json({"message":"Usurio creado",
+    "id":message._id})
+    }).catch((err)=>{
+        console.log(err);
+        return res.json(err)
+    }) 
+})
 
 app.get('/',(req,res) => {
     res.send("Estoy funcionando :)")
