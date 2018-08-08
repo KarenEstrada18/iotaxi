@@ -33,6 +33,7 @@ app.use(_bodyParser2.default.json());
 
 app.post('/createMessage', function (req, res) {
     var message = req.body;
+    console.log(message);
     _messages2.default.create(message).then(function (message) {
         return res.status(201).json({ "message": "Usurio creado",
             "id": message._id });

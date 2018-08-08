@@ -16,6 +16,7 @@ app.use(bodyParser.json());
 
 app.post('/createMessage',(req,res) => {
     let message = req.body
+    console.log(message)
     Message.create(message).then((message) => {
         return res.status(201).json({"message":"Usurio creado",
     "id":message._id})
