@@ -16,9 +16,8 @@ const MessageSchema = new Schema({
         required:true
     },
     "time":{
-        type:Date,
+        type:String,
         required:true,
-        default: new Date().toLocaleString()
     },
     "creae_at":{
         type:Date,

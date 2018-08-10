@@ -16,6 +16,14 @@ var _messages = require('./src/models/messages');
 
 var _messages2 = _interopRequireDefault(_messages);
 
+var _expressGraphql = require('express-graphql');
+
+var _expressGraphql2 = _interopRequireDefault(_expressGraphql);
+
+var _graphql = require('./src/graphql');
+
+var _graphql2 = _interopRequireDefault(_graphql);
+
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 var app = (0, _express2.default)();
@@ -42,6 +50,17 @@ app.post('/createMessage', function (req, res) {
         return res.json(err);
     });
 });
+
+app.use('/graphql', (0, _expressGraphql2.default)(function (req, res) {
+    return {
+        schema: _graphql2.default,
+        graphiql: true,
+        pretty: true,
+        context: {
+            user: req.user
+        }
+    };
+}));
 
 app.get('/', function (req, res) {
     res.send("Estoy funcionando :)");
