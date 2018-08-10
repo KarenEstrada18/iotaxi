@@ -2,6 +2,8 @@ import express from 'express';
 import mongoose from 'mongoose';
 import bodyParser from 'body-parser';
 import Message from './src/models/messages';
+import graphQLHTTP from 'express-graphql';
+import schema from './src/graphql';
 
 
 const app = express();
@@ -25,6 +27,15 @@ app.post('/createMessage',(req,res) => {
         return res.json(err)
     }) 
 })
+
+app.use('/graphql',graphQLHTTP((req,res)=>({
+    schema,
+    graphiql:true,
+    pretty:true,
+    context:{
+        user:req.user
+    }
+})))
 
 app.get('/',(req,res) => {
     res.send("Estoy funcionando :)")
