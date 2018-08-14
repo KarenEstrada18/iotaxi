@@ -20,7 +20,7 @@ app.post('/createMessage',(req,res) => {
     let message = req.body
     console.log(message)
     Message.create(message).then((message) => {
-        return res.status(201).json({"message":"Usurio creado",
+        return res.status(201).json({"message":"Mensaje creado",
     "id":message._id})
     }).catch((err)=>{
         console.log(err);

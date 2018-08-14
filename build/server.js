@@ -43,7 +43,7 @@ app.post('/createMessage', function (req, res) {
     var message = req.body;
     console.log(message);
     _messages2.default.create(message).then(function (message) {
-        return res.status(201).json({ "message": "Usurio creado",
+        return res.status(201).json({ "message": "Mensaje creado",
             "id": message._id });
     }).catch(function (err) {
         console.log(err);
