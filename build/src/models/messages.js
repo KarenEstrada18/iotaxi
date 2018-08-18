@@ -8,6 +8,10 @@ var _mongoose = require('mongoose');
 
 var _mongoose2 = _interopRequireDefault(_mongoose);
 
+var _devices = require('./devices');
+
+var _devices2 = _interopRequireDefault(_devices);
+
 var _dateFromTimestamp = require('date-from-timestamp');
 
 var _dateFromTimestamp2 = _interopRequireDefault(_dateFromTimestamp);
@@ -39,20 +43,22 @@ var MessageSchema = new Schema({
     }
 }, { collection: "Messages", timestamps: true });
 
-MessageSchema.pre('save', function (next) {
-    var message = this;
-    console.log(message);
-
-    if (!message.isModified('time')) {
-        return next();
-    };
+/*MessageSchema.pre('save',function(next){
+    let message = this;
+    console.log(message)
+    if(!message.isModified('time')){ return next()};
     console.log("Aqui bien");
-    console.log(Date(message.time));
-    console.log((0, _normalizeDate2.default)(message.timestamp));
-    //message.time = new Date(message.timestamp)
-    //console.log(new Date(message.timestamp))
-    // console.log(new Date(message.time))
+    console.log(Date(message.time))
+    console.log(ttd(message.timestamp))
     next();
-});
+})*/
+
+/*MessageSchema.post('save', function(next){
+    let message = this;
+    console.log('post begin')
+    console.log(message.device)
+    Device.findByIdAndUpdate({"_id":message.device},{$push:{messages:message._id}})
+
+})*/
 
 exports.default = _mongoose2.default.model('Messages', MessageSchema);

@@ -16,6 +16,10 @@ var _messages = require('./src/models/messages');
 
 var _messages2 = _interopRequireDefault(_messages);
 
+var _devices = require('./src/models/devices');
+
+var _devices2 = _interopRequireDefault(_devices);
+
 var _expressGraphql = require('express-graphql');
 
 var _expressGraphql2 = _interopRequireDefault(_expressGraphql);
@@ -43,8 +47,22 @@ app.post('/createMessage', function (req, res) {
     var message = req.body;
     console.log(message);
     _messages2.default.create(message).then(function (message) {
-        return res.status(201).json({ "message": "Mensaje creado",
-            "id": message._id });
+        console.log("AQUI VA CHIDO");
+        console.log(_devices2.default.findByIdAndUpdate(message.device, { $push: { messages: message._id } }, function (err, dev) {
+            return console.log(dev);
+        }));
+        return res.status(201).json({ "message": "Mensaje creado", "id": message._id });
+    }).catch(function (err) {
+        console.log(err);
+        return res.json(err);
+    });
+});
+
+app.post('/addDevice', function (req, res) {
+    var device = req.body;
+    console.log(device);
+    _devices2.default.create(device).then(function (device) {
+        return res.status(201).json({ "message": "Dispositivo Creado", "id": device._id });
     }).catch(function (err) {
         console.log(err);
         return res.json(err);
