@@ -15,6 +15,10 @@ const DeviceSchema = new Schema({
         type:[Schema.Types.ObjectId],
         ref: "Messages"
     },
+    "vehicle":{
+        type:Schema.Types.ObjectId,
+        ref:"Vehicles"
+    },
     "create_at":{
         type:Date,
         default: new Date()

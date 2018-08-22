@@ -10,7 +10,7 @@ export default new GraphQLSchema({
         name:'Query',
         fields:queries
     }),
-    mutations:new GraphQLObjectType({
+    mutation:new GraphQLObjectType({
         name:"Mutation",
         fields:mutations
     })
