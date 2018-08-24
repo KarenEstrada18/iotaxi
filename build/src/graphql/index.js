@@ -21,8 +21,9 @@ exports.default = new _graphql.GraphQLSchema({
         name: 'Query',
         fields: _queries2.default
     }),
-    mutations: new _graphql.GraphQLObjectType({
+    mutation: new _graphql.GraphQLObjectType({
         name: "Mutation",
         fields: _mutations2.default
     })
+
 });

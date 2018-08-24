@@ -1,10 +1,10 @@
-"use strict";
+'use strict';
 
 Object.defineProperty(exports, "__esModule", {
     value: true
 });
 
-var _mongoose = require("mongoose");
+var _mongoose = require('mongoose');
 
 var _mongoose2 = _interopRequireDefault(_mongoose);
 
@@ -12,22 +12,14 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
 
 var Schema = _mongoose2.default.Schema;
 
-var DeviceSchema = new Schema({
-    "_id": {
+var VehicleSchema = new Schema({
+    'concesion': {
         type: String,
         required: true
     },
-    "name": {
+    "consuctor": {
         type: String,
         required: true
-    },
-    "messages": {
-        type: [Schema.Types.ObjectId],
-        ref: "Messages"
-    },
-    "vehicle": {
-        type: Schema.Types.ObjectId,
-        ref: "Vehicles"
     },
     "create_at": {
         type: Date,
@@ -37,6 +29,6 @@ var DeviceSchema = new Schema({
         type: Date,
         default: new Date()
     }
-}, { collection: "Devices", timestamps: true });
+}, { collection: "Vehicle", timestamp: true });
 
-exports.default = _mongoose2.default.model('Devices', DeviceSchema);
+exports.default = _mongoose2.default.model('Vehicle', VehicleSchema);

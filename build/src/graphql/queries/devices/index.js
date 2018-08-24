@@ -15,6 +15,6 @@ var _single2 = _interopRequireDefault(_single);
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 exports.default = {
-    allMessages: _all2.default,
-    singleMessage: _single2.default
+    allDevice: _all2.default,
+    singleDevice: _single2.default
 };

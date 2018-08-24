@@ -12,6 +12,14 @@ var _bodyParser = require('body-parser');
 
 var _bodyParser2 = _interopRequireDefault(_bodyParser);
 
+var _cors = require('cors');
+
+var _cors2 = _interopRequireDefault(_cors);
+
+var _users = require('./src/models/users');
+
+var _users2 = _interopRequireDefault(_users);
+
 var _messages = require('./src/models/messages');
 
 var _messages2 = _interopRequireDefault(_messages);
@@ -28,6 +36,10 @@ var _graphql = require('./src/graphql');
 
 var _graphql2 = _interopRequireDefault(_graphql);
 
+var _create = require('./src/resolvers/create');
+
+var _verify = require('./src/resolvers/verify');
+
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 var app = (0, _express2.default)();
@@ -42,6 +54,28 @@ db.on('error', function () {
 });
 
 app.use(_bodyParser2.default.json());
+app.use((0, _cors2.default)());
+
+app.post('/signup', function (req, res) {
+    var user = req.body;
+    _users2.default.create(user).then(function (user) {
+        return res.status(201).json({ "message": "Usuario Creado",
+            "id": user._id });
+    }).catch(function (err) {
+        console.log(err);
+        return res.json(err);
+    });
+});
+
+app.post('/login', function (req, res) {
+    var token = (0, _create.createToken)(req.body.email, req.body.password).then(function (token) {
+        res.status(201).json({ token: token });
+    }).catch(function () {
+        res.status(403).json({
+            message: "Login Failed!!!! :( Invalid credentials"
+        });
+    });
+});
 
 app.post('/createMessage', function (req, res) {
     var message = req.body;
