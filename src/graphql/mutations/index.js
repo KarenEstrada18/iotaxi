@@ -1,5 +1,7 @@
 import Messages from './messages';
+import Users from './users';
 
 export default{
-    ...Messages
+    ...Messages,
+    ...Users
 }

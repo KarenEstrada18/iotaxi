@@ -1,5 +1,7 @@
-import allMessages from './all'
+import allMessages from './all';
+import singleMessage from './single';
 
 export default {
-    allMessages
+    allMessages,
+    singleMessage
 }

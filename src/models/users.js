@@ -28,10 +28,10 @@ const UserSchema = new Schema({
     },
     "is_admin":{
         type:Boolean,
-        defaul:false
     },
     "is_active":{
         type:Boolean,
+        default:true
     },
     "create_at":{
         type:Date,
