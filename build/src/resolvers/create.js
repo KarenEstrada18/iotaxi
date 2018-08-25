@@ -34,6 +34,7 @@ var createToken = exports.createToken = function createToken(email, password) {
                 console.log(isMatch);
                 if (isMatch) {
                     var payload = {
+                        name: user.name,
                         admin: user.is_admin,
                         email: user.email,
                         id: user._id

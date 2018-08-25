@@ -20,6 +20,7 @@ export const createToken = function (email,password){
                 console.log(isMatch);
                 if(isMatch){
                     let payload = {
+                        name:user.name,
                         admin:user.is_admin,
                         email:user.email,
                         id:user._id
