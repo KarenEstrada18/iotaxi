@@ -35,6 +35,30 @@ var UserSchema = new Schema({
         type: String,
         required: true
     },
+    "street": {
+        type: String
+    },
+    "district": {
+        type: String
+    },
+    "numExt": {
+        type: String
+    },
+    "numInt": {
+        type: String
+    },
+    "city": {
+        type: String
+    },
+    "country": {
+        type: String
+    },
+    "cc": {
+        type: String
+    },
+    "telefono": {
+        type: String
+    },
     "Devices": {
         type: [Schema.Types.ObjectId],
         ref: "Device"
