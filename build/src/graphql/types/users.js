@@ -32,6 +32,30 @@ var UserType = exports.UserType = new _graphql.GraphQLObjectType({
             email: {
                 type: _graphql.GraphQLString
             },
+            street: {
+                type: _graphql.GraphQLString
+            },
+            district: {
+                type: _graphql.GraphQLString
+            },
+            numExt: {
+                type: _graphql.GraphQLString
+            },
+            numInt: {
+                type: _graphql.GraphQLString
+            },
+            city: {
+                type: _graphql.GraphQLString
+            },
+            country: {
+                type: _graphql.GraphQLString
+            },
+            cc: {
+                type: _graphql.GraphQLString
+            },
+            telefono: {
+                type: _graphql.GraphQLString
+            },
             /*Devices:{
                 type:GraphQLList(DeviceType),
                 resolve(user){
@@ -70,6 +94,30 @@ var UserInputType = exports.UserInputType = new _graphql.GraphQLInputObjectType(
             email: {
                 type: _graphql.GraphQLString
             }, password: {
+                type: _graphql.GraphQLString
+            },
+            street: {
+                type: _graphql.GraphQLString
+            },
+            district: {
+                type: _graphql.GraphQLString
+            },
+            numExt: {
+                type: _graphql.GraphQLString
+            },
+            numInt: {
+                type: _graphql.GraphQLString
+            },
+            city: {
+                type: _graphql.GraphQLString
+            },
+            country: {
+                type: _graphql.GraphQLString
+            },
+            cc: {
+                type: _graphql.GraphQLString
+            },
+            telefono: {
                 type: _graphql.GraphQLString
             },
             is_admin: {

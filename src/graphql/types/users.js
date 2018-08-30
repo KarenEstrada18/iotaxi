@@ -26,6 +26,30 @@ export const UserType = new GraphQLObjectType({
         email:{
             type:GraphQLString
         },
+        street:{
+            type:GraphQLString,
+        },
+        district:{
+            type:GraphQLString
+        },
+        numExt:{
+            type:GraphQLString
+        },
+        numInt:{
+            type:GraphQLString
+        },
+        city:{
+            type:GraphQLString
+        },
+        country:{
+            type:GraphQLString
+        },
+        cc:{
+            type:GraphQLString
+        },
+        telefono:{
+            type:GraphQLString
+        },
         /*Devices:{
             type:GraphQLList(DeviceType),
             resolve(user){
@@ -62,6 +86,30 @@ export const UserInputType = new GraphQLInputObjectType({
         email:{
             type:GraphQLString
         },password:{
+            type:GraphQLString
+        },
+        street:{
+            type:GraphQLString,
+        },
+        district:{
+            type:GraphQLString
+        },
+        numExt:{
+            type:GraphQLString
+        },
+        numInt:{
+            type:GraphQLString
+        },
+        city:{
+            type:GraphQLString
+        },
+        country:{
+            type:GraphQLString
+        },
+        cc:{
+            type:GraphQLString
+        },
+        telefono:{
             type:GraphQLString
         },
         is_admin:{
