@@ -3,6 +3,8 @@ import {
     GraphQLString,
     GraphQLID,
     GraphQLObjectType,
+    GraphQLFloat,
+    GraphQLInt,
     GraphQLBoolean,
     GraphQLNonNull
 } from 'graphql'
@@ -18,6 +20,21 @@ export const DeviceType = new GraphQLObjectType({
         },
         name:{
             type:GraphQLString
+        },
+        lastLocation:{
+            type:GraphQLString
+        },
+        contTravel:{
+            type:GraphQLInt
+        },
+        contTime:{
+            type:GraphQLInt
+        },
+        contKm:{
+            type:GraphQLInt
+        },
+        contEfectivo:{
+            type:GraphQLFloat
         },
         /*messages:{
             type:[Schema.Types.ObjectId],

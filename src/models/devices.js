@@ -11,9 +11,20 @@ const DeviceSchema = new Schema({
         type:String,
         required:true
     },
-    "messages":{
-        type:[Schema.Types.ObjectId],
-        ref: "Messages"
+    "lastLocation":{
+        type:String
+    },
+    "contTravel":{
+        type:Number
+    },
+    "contTime":{
+        type:Number
+    },
+    "contKm":{
+        type:Number
+    },
+    "contEfectivo":{
+        type:Number
     },
     "vehicle":{
         type:Schema.Types.ObjectId,

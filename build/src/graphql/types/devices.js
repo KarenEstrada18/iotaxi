@@ -26,6 +26,21 @@ var DeviceType = exports.DeviceType = new _graphql.GraphQLObjectType({
             name: {
                 type: _graphql.GraphQLString
             },
+            lastLocation: {
+                type: _graphql.GraphQLString
+            },
+            contTravel: {
+                type: _graphql.GraphQLInt
+            },
+            contTime: {
+                type: _graphql.GraphQLInt
+            },
+            contKm: {
+                type: _graphql.GraphQLInt
+            },
+            contEfectivo: {
+                type: _graphql.GraphQLFloat
+            },
             /*messages:{
                 type:[Schema.Types.ObjectId],
                 ref: "Messages"

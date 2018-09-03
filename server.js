@@ -9,6 +9,21 @@ import graphQLHTTP from 'express-graphql';
 import schema from './src/graphql';
 import {createToken} from './src/resolvers/create'
 import {verifyToken} from './src/resolvers/verify'
+import timestampToDate from 'date-from-timestamp'
+
+function Unix_timestamp(t)
+{
+    let dt = new Date(t*1000);
+    let months = ['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'];
+    let year = dt.getFullYear();
+    let month = months[dt.getMonth()];
+    let date = dt.getDate();
+    
+    let hr = dt.getHours();
+    let m = "0" + dt.getMinutes();
+    let s = "0" + dt.getSeconds();
+    return date + '/' + month + '/' + year + ' ' + hr + ':' + m.substr(-2) + ':' + s.substr(-2)    ;
+}
 
 
 const app = express();
@@ -48,10 +63,15 @@ app.post('/createMessage',(req,res) => {
     let message = req.body
     console.log(message)
     Message.create(message).then((message) => {
-        console.log("AQUI VA CHIDO")
-        console.log(Device.findByIdAndUpdate(message.device,{$push:{messages:message._id}},(err,dev) => {
-            return console.log(dev)
-        }))
+        console.log(message.timestamp,"aqui chido")
+        let hora = Unix_timestamp(message.timestamp);
+        console.log(hora)  
+        console.log(Math.round(new Date().getTime/1000))
+        if(message.data.length === 12){
+            Device.findByIdAndUpdate(message.device,{$set:{lastLocation:message.data}},(err,dev) => {
+                return dev
+            })
+        }
         return res.status(201).json({"message":"Mensaje creado", "id":message._id})
     }).catch((err)=>{
         console.log(err);
@@ -71,15 +91,6 @@ app.post('/addDevice',(req,res) => {
         
 })
 
-app.use('/graphql',(req,res,next) => {
-    const token = req.headers['authorization'];
-    try{
-        req.user = verifyToken(token)
-        next();
-    }catch(error){
-        res.status(401).json({message:error.message})
-    }
-})
 
 app.use('/graphql',graphQLHTTP((req,res)=>({
     schema,

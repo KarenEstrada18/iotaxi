@@ -40,7 +40,24 @@ var _create = require('./src/resolvers/create');
 
 var _verify = require('./src/resolvers/verify');
 
+var _dateFromTimestamp = require('date-from-timestamp');
+
+var _dateFromTimestamp2 = _interopRequireDefault(_dateFromTimestamp);
+
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+function Unix_timestamp(t) {
+    var dt = new Date(t * 1000);
+    var months = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
+    var year = dt.getFullYear();
+    var month = months[dt.getMonth()];
+    var date = dt.getDate();
+
+    var hr = dt.getHours();
+    var m = "0" + dt.getMinutes();
+    var s = "0" + dt.getSeconds();
+    return date + '/' + month + '/' + year + ' ' + hr + ':' + m.substr(-2) + ':' + s.substr(-2);
+}
 
 var app = (0, _express2.default)();
 var PORT = process.env.PORT || 3000;
@@ -81,10 +98,15 @@ app.post('/createMessage', function (req, res) {
     var message = req.body;
     console.log(message);
     _messages2.default.create(message).then(function (message) {
-        console.log("AQUI VA CHIDO");
-        console.log(_devices2.default.findByIdAndUpdate(message.device, { $push: { messages: message._id } }, function (err, dev) {
-            return console.log(dev);
-        }));
+        console.log(message.timestamp, "aqui chido");
+        var hora = Unix_timestamp(message.timestamp);
+        console.log(hora);
+        console.log(Math.round(new Date().getTime / 1000));
+        if (message.data.length === 12) {
+            _devices2.default.findByIdAndUpdate(message.device, { $set: { lastLocation: message.data } }, function (err, dev) {
+                return dev;
+            });
+        }
         return res.status(201).json({ "message": "Mensaje creado", "id": message._id });
     }).catch(function (err) {
         console.log(err);
@@ -101,16 +123,6 @@ app.post('/addDevice', function (req, res) {
         console.log(err);
         return res.json(err);
     });
-});
-
-app.use('/graphql', function (req, res, next) {
-    var token = req.headers['authorization'];
-    try {
-        req.user = (0, _verify.verifyToken)(token);
-        next();
-    } catch (error) {
-        res.status(401).json({ message: error.message });
-    }
 });
 
 app.use('/graphql', (0, _expressGraphql2.default)(function (req, res) {
