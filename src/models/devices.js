@@ -15,16 +15,20 @@ const DeviceSchema = new Schema({
         type:String
     },
     "contTravel":{
-        type:Number
+        type:Number,
+        default:0
     },
     "contTime":{
-        type:Number
+        type:Number,
+        default:0
     },
     "contKm":{
-        type:Number
+        type:Number,
+        default:0
     },
     "contEfectivo":{
-        type:Number
+        type:Number,
+        default:0
     },
     "vehicle":{
         type:Schema.Types.ObjectId,

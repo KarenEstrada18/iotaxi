@@ -46,6 +46,11 @@ var _dateFromTimestamp2 = _interopRequireDefault(_dateFromTimestamp);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
+var totalCash = 0;
+var totalKm = 0;
+var totalTime = 0;
+var totalViajes = 0;
+
 function Unix_timestamp(t) {
     var dt = new Date(t * 1000);
     var months = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
@@ -98,14 +103,27 @@ app.post('/createMessage', function (req, res) {
     var message = req.body;
     console.log(message);
     _messages2.default.create(message).then(function (message) {
-        console.log(message.timestamp, "aqui chido");
-        var hora = Unix_timestamp(message.timestamp);
-        console.log(hora);
-        console.log(Math.round(new Date().getTime / 1000));
+        /* console.log(message.timestamp,"aqui chido")
+         let hora = Unix_timestamp(message.timestamp);
+         console.log(hora)*/
         if (message.data.length === 12) {
-            _devices2.default.findByIdAndUpdate(message.device, { $set: { lastLocation: message.data } }, function (err, dev) {
-                return dev;
-            });
+            if (message.data.indexOf('00') === 0 || message.data.indexOf('01') === 0) {
+                console.log("entro");
+                var pesos = message.data.substr(0, 4);
+                var cent = message.data.substr(4, 2);
+                totalCash += Number(pesos + "." + cent);
+                totalKm += Number(message.data.substr(7, 3));
+                totalTime += Number(message.data.substr(9, 3));
+                //console.log(cash,",",km,",",time)
+                _devices2.default.findByIdAndUpdate(message.device, { $set: { contEfectivo: totalCash, contKm: totalKm, contTime: totalTime } }, function (err, dev) {
+                    return dev;
+                });
+                console.log("salio");
+            } else {
+                _devices2.default.findByIdAndUpdate(message.device, { $set: { lastLocation: message.data } }, function (err, dev) {
+                    return dev;
+                });
+            }
         }
         return res.status(201).json({ "message": "Mensaje creado", "id": message._id });
     }).catch(function (err) {

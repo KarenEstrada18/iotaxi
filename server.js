@@ -11,6 +11,11 @@ import {createToken} from './src/resolvers/create'
 import {verifyToken} from './src/resolvers/verify'
 import timestampToDate from 'date-from-timestamp'
 
+let totalCash = 0;
+let totalKm = 0;
+let totalTime = 0;
+let totalViajes = 0;
+
 function Unix_timestamp(t)
 {
     let dt = new Date(t*1000);
@@ -63,14 +68,28 @@ app.post('/createMessage',(req,res) => {
     let message = req.body
     console.log(message)
     Message.create(message).then((message) => {
-        console.log(message.timestamp,"aqui chido")
+       /* console.log(message.timestamp,"aqui chido")
         let hora = Unix_timestamp(message.timestamp);
-        console.log(hora)  
-        console.log(Math.round(new Date().getTime/1000))
+        console.log(hora)*/
         if(message.data.length === 12){
-            Device.findByIdAndUpdate(message.device,{$set:{lastLocation:message.data}},(err,dev) => {
-                return dev
-            })
+            if(message.data.indexOf('00') === 0 || message.data.indexOf('01') === 0){
+                console.log("entro")
+                let pesos = message.data.substr(0,4);
+                let cent = message.data.substr(4,2);
+                totalCash += Number(pesos+"."+cent);
+                totalKm += Number(message.data.substr(7,3));
+                totalTime += Number(message.data.substr(9,3));
+                //console.log(cash,",",km,",",time)
+                Device.findByIdAndUpdate(message.device,{$set:{contEfectivo:totalCash, contKm:totalKm, contTime:totalTime}},(err,dev) => {
+                    return dev
+                })
+                console.log("salio")
+
+            }else{
+                Device.findByIdAndUpdate(message.device,{$set:{lastLocation:message.data}},(err,dev) => {
+                    return dev
+                })
+            }
         }
         return res.status(201).json({"message":"Mensaje creado", "id":message._id})
     }).catch((err)=>{
