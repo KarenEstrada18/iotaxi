@@ -86,9 +86,10 @@ app.post('/createMessage',(req,res) => {
                 console.log("entro")
                 let pesos = message.data.substr(0,4);
                 let cent = message.data.substr(4,2);
-                let cash = Number(pesos+"."+cent);
-                let km = Number(message.data.substr(6,3));
-                let time = Number(message.data.substr(8,3));
+                
+                let cash = pesos+"."+cent;
+                let km = message.data.substr(6,3);
+                let time = message.data.substr(9,3);
                 console.log(cash,",",km,",",time)
                 Device.findByIdAndUpdate(message.device,{$inc:{contEfectivo:cash, contKm:km, contTime:time}},(err,dev) => {
                     return dev
