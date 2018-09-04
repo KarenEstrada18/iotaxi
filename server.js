@@ -14,6 +14,7 @@ import timestampToDate from 'date-from-timestamp'
 let totalCash = 0;
 let totalKm = 0;
 let totalTime = 0;
+let ultimoFolio;
 let totalViajes = 0;
 
 function Unix_timestamp(t)
@@ -71,15 +72,26 @@ app.post('/createMessage',(req,res) => {
        /* console.log(message.timestamp,"aqui chido")
         let hora = Unix_timestamp(message.timestamp);
         console.log(hora)*/
+        if(message.data.length === 6){
+            if(message.data === ultimoFolio){
+                totalViajes++
+                Device.findByIdAndUpdate(message.device,{$set:{contTravel:totalViajes}},(err,dev) => {
+                    return dev
+                })
+            }else{
+                ultimoFolio= message.data;
+            }
+        }
+
         if(message.data.length === 12){
             if(message.data.indexOf('00') === 0 || message.data.indexOf('01') === 0){
                 console.log("entro")
                 let pesos = message.data.substr(0,4);
                 let cent = message.data.substr(4,2);
                 totalCash += Number(pesos+"."+cent);
-                totalKm += Number(message.data.substr(7,3));
-                totalTime += Number(message.data.substr(9,3));
-                //console.log(cash,",",km,",",time)
+                totalKm += Number(message.data.substr(6,3));
+                totalTime += Number(message.data.substr(8,3));
+                console.log(totalCash,",",totalKm,",",totalTime)
                 Device.findByIdAndUpdate(message.device,{$set:{contEfectivo:totalCash, contKm:totalKm, contTime:totalTime}},(err,dev) => {
                     return dev
                 })
