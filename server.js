@@ -11,11 +11,8 @@ import {createToken} from './src/resolvers/create'
 import {verifyToken} from './src/resolvers/verify'
 import timestampToDate from 'date-from-timestamp'
 
-let totalCash = 0;
-let totalKm = 0;
-let totalTime = 0;
+let bandera = false;
 let ultimoFolio;
-let totalViajes = 0;
 
 function Unix_timestamp(t)
 {
@@ -28,7 +25,7 @@ function Unix_timestamp(t)
     let hr = dt.getHours();
     let m = "0" + dt.getMinutes();
     let s = "0" + dt.getSeconds();
-    return date + '/' + month + '/' + year + ' ' + hr + ':' + m.substr(-2) + ':' + s.substr(-2)    ;
+    return /*date + '/' + month + '/' + year + ' ' + */hr /*+ ':' + m.substr(-2) + ':' + s.substr(-2)*/;
 }
 
 
@@ -69,9 +66,10 @@ app.post('/createMessage',(req,res) => {
     let message = req.body
     console.log(message)
     Message.create(message).then((message) => {
-       /* console.log(message.timestamp,"aqui chido")
+        console.log(message.timestamp,"aqui chido")
         let hora = Unix_timestamp(message.timestamp);
-        console.log(hora)*/
+        console.log(hora)
+        
         if(message.data.length === 6){
             if(message.data === ultimoFolio){
                 totalViajes++
@@ -88,11 +86,11 @@ app.post('/createMessage',(req,res) => {
                 console.log("entro")
                 let pesos = message.data.substr(0,4);
                 let cent = message.data.substr(4,2);
-                totalCash += Number(pesos+"."+cent);
-                totalKm += Number(message.data.substr(6,3));
-                totalTime += Number(message.data.substr(8,3));
-                console.log(totalCash,",",totalKm,",",totalTime)
-                Device.findByIdAndUpdate(message.device,{$set:{contEfectivo:totalCash, contKm:totalKm, contTime:totalTime}},(err,dev) => {
+                let cash = Number(pesos+"."+cent);
+                let km = Number(message.data.substr(6,3));
+                let time = Number(message.data.substr(8,3));
+                console.log(cash,",",km,",",time)
+                Device.findByIdAndUpdate(message.device,{$inc:{contEfectivo:cash, contKm:km, contTime:time}},(err,dev) => {
                     return dev
                 })
                 console.log("salio")
