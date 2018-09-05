@@ -55,7 +55,7 @@ function Unix_timestamp(t) {
     var year = dt.getFullYear();
     var month = months[dt.getMonth()];
     var date = dt.getDate();
-
+    var restart = 0;
     var hr = dt.getHours();
     var m = "0" + dt.getMinutes();
     var s = "0" + dt.getSeconds();
@@ -122,12 +122,11 @@ app.post('/createMessage', function (req, res) {
                 console.log("entro");
                 var pesos = message.data.substr(0, 4);
                 var cent = message.data.substr(4, 2);
-
                 var cash = Number(pesos + "." + cent);
                 var km = Number(message.data.substr(6, 3));
                 var time = Number(message.data.substr(9, 3));
                 console.log(cash, ",", km, ",", time);
-                _devices2.default.findByIdAndUpdate(message.device, { $inc: { contEfectivo: cash, contKm: km, contTime: time } }, function (err, dev) {
+                _devices2.default.findByIdAndUpdate(message.device, { $inc: { contEfectivo: cash, contKm: km, contTime: time, contTravel: 1 } }, function (err, dev) {
                     return dev;
                 });
                 console.log("salio");

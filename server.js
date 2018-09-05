@@ -21,7 +21,7 @@ function Unix_timestamp(t)
     let year = dt.getFullYear();
     let month = months[dt.getMonth()];
     let date = dt.getDate();
-    
+    const restart = 0;
     let hr = dt.getHours();
     let m = "0" + dt.getMinutes();
     let s = "0" + dt.getSeconds();
@@ -86,12 +86,11 @@ app.post('/createMessage',(req,res) => {
                 console.log("entro")
                 let pesos = message.data.substr(0,4);
                 let cent = message.data.substr(4,2);
-                
                 let cash = Number(pesos+"."+cent);
                 let km = Number(message.data.substr(6,3));
                 let time = Number(message.data.substr(9,3));
                 console.log(cash,",",km,",",time)
-                Device.findByIdAndUpdate(message.device,{$inc:{contEfectivo:cash, contKm:km, contTime:time}},(err,dev) => {
+                Device.findByIdAndUpdate(message.device,{$inc:{contEfectivo:cash, contKm:km, contTime:time, contTravel:1}},(err,dev) => {
                     return dev
                 })
                 console.log("salio")
