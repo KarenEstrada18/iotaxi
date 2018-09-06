@@ -50,13 +50,13 @@ export const UserType = new GraphQLObjectType({
         telefono:{
             type:GraphQLString
         },
-        /*Devices:{
+        Devices:{
             type:GraphQLList(DeviceType),
             resolve(user){
                 const {device} = user
                 return Device.findById(device).exec()
             }
-        },*/
+        },
         is_admin:{
             type:GraphQLBoolean
         },

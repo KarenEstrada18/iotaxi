@@ -56,13 +56,14 @@ var UserType = exports.UserType = new _graphql.GraphQLObjectType({
             telefono: {
                 type: _graphql.GraphQLString
             },
-            /*Devices:{
-                type:GraphQLList(DeviceType),
-                resolve(user){
-                    const {device} = user
-                    return Device.findById(device).exec()
+            Devices: {
+                type: (0, _graphql.GraphQLList)(_devices.DeviceType),
+                resolve: function resolve(user) {
+                    var device = user.device;
+
+                    return _devices3.default.findById(device).exec();
                 }
-            },*/
+            },
             is_admin: {
                 type: _graphql.GraphQLBoolean
             },

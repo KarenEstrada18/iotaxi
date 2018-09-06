@@ -21,6 +21,35 @@ var DeviceSchema = new Schema({
         type: String,
         required: true
     },
+
+    "marcaVehicle": {
+        type: String
+    },
+    "modeloVehicle": {
+        type: String
+    },
+    "placaVehicle": {
+        type: String
+    },
+    "conductorName": {
+        type: String
+    },
+    "conductorAddress": {
+        type: String
+    },
+    "conductorDistrict": {
+        type: String
+    },
+    "conductorNumExt": {
+        type: String
+    },
+    "conductorNumInt": {
+        type: String
+    },
+    "conductorTel": {
+        type: String
+    },
+
     "lastLocation": {
         type: String
     },
@@ -40,9 +69,9 @@ var DeviceSchema = new Schema({
         type: Number,
         default: 0
     },
-    "vehicle": {
+    "user": {
         type: Schema.Types.ObjectId,
-        ref: "Vehicles"
+        ref: 'Users'
     },
     "create_at": {
         type: Date,

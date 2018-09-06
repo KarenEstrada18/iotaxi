@@ -59,9 +59,9 @@ var UserSchema = new Schema({
     "telefono": {
         type: String
     },
-    "Devices": {
+    "devices": {
         type: [Schema.Types.ObjectId],
-        ref: "Device"
+        ref: "Devices"
     },
     "is_admin": {
         type: Boolean

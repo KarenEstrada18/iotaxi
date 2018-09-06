@@ -46,9 +46,9 @@ const UserSchema = new Schema({
     "telefono":{
         type:String
     },
-    "Devices":{
+    "devices":{
         type:[Schema.Types.ObjectId],
-        ref:"Device"
+        ref:"Devices"
     },
     "is_admin":{
         type:Boolean,
@@ -64,7 +64,7 @@ const UserSchema = new Schema({
     "client_id":{
         type:String
     }
-},{collection:"Users", timestamps:true});
+},{collection:"Users",timestamps:true});
 
 UserSchema.pre('save',function(next){
     let user = this;

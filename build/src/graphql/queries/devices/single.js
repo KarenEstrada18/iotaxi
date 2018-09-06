@@ -15,6 +15,7 @@ var _devices3 = require('../../types/devices');
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 var querySingledevice = {
+
     type: _devices3.DeviceType,
     args: {
         id: {

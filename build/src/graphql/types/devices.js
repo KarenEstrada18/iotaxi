@@ -3,15 +3,15 @@
 Object.defineProperty(exports, "__esModule", {
     value: true
 });
-exports.MovieInputType = exports.DeviceType = undefined;
+exports.DeviceInputType = exports.DeviceType = undefined;
 
 var _graphql = require('graphql');
 
-var _vehicles = require('./vehicles');
+var _users = require('./users');
 
-var _vehicles2 = require('../../models/vehicles');
+var _users2 = require('../../models/users');
 
-var _vehicles3 = _interopRequireDefault(_vehicles2);
+var _users3 = _interopRequireDefault(_users2);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -26,6 +26,35 @@ var DeviceType = exports.DeviceType = new _graphql.GraphQLObjectType({
             name: {
                 type: _graphql.GraphQLString
             },
+
+            marcaVehicle: {
+                type: _graphql.GraphQLString
+            },
+            modeloVehicle: {
+                type: _graphql.GraphQLString
+            },
+            placaVehicle: {
+                type: _graphql.GraphQLString
+            },
+            conductorName: {
+                type: _graphql.GraphQLString
+            },
+            conductorAddress: {
+                type: _graphql.GraphQLString
+            },
+            conductorDistrict: {
+                type: _graphql.GraphQLString
+            },
+            conductorNumExt: {
+                type: _graphql.GraphQLString
+            },
+            conductorNumInt: {
+                type: _graphql.GraphQLString
+            },
+            conductorTel: {
+                type: _graphql.GraphQLString
+            },
+
             lastLocation: {
                 type: _graphql.GraphQLString
             },
@@ -41,17 +70,14 @@ var DeviceType = exports.DeviceType = new _graphql.GraphQLObjectType({
             contEfectivo: {
                 type: _graphql.GraphQLFloat
             },
-            /*messages:{
-                type:[Schema.Types.ObjectId],
-                ref: "Messages"
-            },
-            vehicle:{
-                type:VehicleType,
-                resolve(device){
-                    const {vehicle} = device
-                    return Vehicle.findById(vehicle).exec()
+            user: {
+                type: _users.UserType,
+                resolve: function resolve(device) {
+                    var user = device.user;
+
+                    return _users3.default.findById(user).exec();
                 }
-            },*/
+            },
             create_at: {
                 type: _graphql.GraphQLString
             },
@@ -63,7 +89,8 @@ var DeviceType = exports.DeviceType = new _graphql.GraphQLObjectType({
     }
 });
 
-var MovieInputType = exports.MovieInputType = new _graphql.GraphQLInputObjectType({
+var DeviceInputType = exports.DeviceInputType = new _graphql.GraphQLInputObjectType({
+
     name: "addDevices",
     description: "Agrega o modifica dispositivos en la bd",
     fields: function fields() {
@@ -72,11 +99,39 @@ var MovieInputType = exports.MovieInputType = new _graphql.GraphQLInputObjectTyp
                 type: _graphql.GraphQLString
             },
             name: {
-                type: _graphql.GraphQLString /*
-                                             messages:{
-                                                type:[Schema.Types.ObjectId],
-                                                ref: "Messages"
-                                             }*/
-            } };
+                type: _graphql.GraphQLString
+            },
+            user: {
+                type: _graphql.GraphQLString
+            },
+
+            marcaVehicle: {
+                type: _graphql.GraphQLString
+            },
+            modeloVehicle: {
+                type: _graphql.GraphQLString
+            },
+            placaVehicle: {
+                type: _graphql.GraphQLString
+            },
+            conductorName: {
+                type: _graphql.GraphQLString
+            },
+            conductorAddress: {
+                type: _graphql.GraphQLString
+            },
+            conductorDistrict: {
+                type: _graphql.GraphQLString
+            },
+            conductorNumExt: {
+                type: _graphql.GraphQLString
+            },
+            conductorNumInt: {
+                type: _graphql.GraphQLString
+            },
+            conductorTel: {
+                type: _graphql.GraphQLString
+            }
+        };
     }
 });

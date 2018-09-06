@@ -3,6 +3,7 @@ import Device from '../../../models/devices';
 import {DeviceType} from '../../types/devices';
 
 const querySingledevice = {
+    
     type:DeviceType,
     args:{
         id:{

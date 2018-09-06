@@ -25,7 +25,7 @@ function Unix_timestamp(t)
     let hr = dt.getHours();
     let m = "0" + dt.getMinutes();
     let s = "0" + dt.getSeconds();
-    return /*date + '/' + month + '/' + year + ' ' + */hr /*+ ':' + m.substr(-2) + ':' + s.substr(-2)*/;
+    return /*date + '/' + month + '/' + year + ' ' + */hr + ':' + m.substr(-2)/* + ':' + s.substr(-2)*/;
 }
 
 
@@ -69,16 +69,12 @@ app.post('/createMessage',(req,res) => {
         console.log(message.timestamp,"aqui chido")
         let hora = Unix_timestamp(message.timestamp);
         console.log(hora)
-        
-        if(message.data.length === 6){
-            if(message.data === ultimoFolio){
-                totalViajes++
-                Device.findByIdAndUpdate(message.device,{$set:{contTravel:totalViajes}},(err,dev) => {
-                    return dev
-                })
-            }else{
-                ultimoFolio= message.data;
-            }
+
+        if(hora>= '4:00' && hora <='5:00'){
+            console.log("ENTRO RESET")
+            Device.findByIdAndUpdate(message.device,{$set:{contEfectivo:0, contKm:0, contTime:0, contTravel:0}},(err,dev) => {
+                return dev
+            })
         }
 
         if(message.data.length === 12){

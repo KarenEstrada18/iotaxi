@@ -15,6 +15,7 @@ var _devices3 = require('../../types/devices');
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 var queryAllDevices = {
+
     type: new _graphql.GraphQLList(_devices3.DeviceType),
     resolve: function resolve() {
         var devices = _devices2.default.find().exec();
