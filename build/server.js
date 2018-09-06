@@ -150,6 +150,16 @@ app.post('/addDevice', function (req, res) {
     });
 });
 
+app.use('/graphql', function (req, res, next) {
+    var token = req.headers['authorization'];
+    try {
+        req.user = (0, _verify.verifyToken)(token);
+        next();
+    } catch (error) {
+        res.status(401).json({ message: error.message });
+    }
+});
+
 app.use('/graphql', (0, _expressGraphql2.default)(function (req, res) {
     return {
         schema: _graphql2.default,
