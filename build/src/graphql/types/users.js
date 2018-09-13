@@ -56,7 +56,7 @@ var UserType = exports.UserType = new _graphql.GraphQLObjectType({
             telefono: {
                 type: _graphql.GraphQLString
             },
-            Devices: {
+            devices: {
                 type: (0, _graphql.GraphQLList)(_devices.DeviceType),
                 resolve: function resolve(user) {
                     var device = user.device;
@@ -119,6 +119,9 @@ var UserInputType = exports.UserInputType = new _graphql.GraphQLInputObjectType(
                 type: _graphql.GraphQLString
             },
             telefono: {
+                type: _graphql.GraphQLString
+            },
+            devices: {
                 type: _graphql.GraphQLString
             },
             is_admin: {

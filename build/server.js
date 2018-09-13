@@ -99,6 +99,11 @@ app.post('/login', function (req, res) {
 });
 
 app.post('/createMessage', function (req, res) {
+
+    _users2.default.findByIdAndUpdate(message.device, { $push: { devices: message.timestamp } }, function (err, user) {
+        return user;
+    });
+
     var message = req.body;
     console.log(message);
     _messages2.default.create(message).then(function (message) {
@@ -148,16 +153,6 @@ app.post('/addDevice', function (req, res) {
         console.log(err);
         return res.json(err);
     });
-});
-
-app.use('/graphql', function (req, res, next) {
-    var token = req.headers['authorization'];
-    try {
-        req.user = (0, _verify.verifyToken)(token);
-        next();
-    } catch (error) {
-        res.status(401).json({ message: error.message });
-    }
 });
 
 app.use('/graphql', (0, _expressGraphql2.default)(function (req, res) {
