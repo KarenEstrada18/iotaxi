@@ -31,7 +31,7 @@ export const DeviceType = new GraphQLObjectType({
         placaVehicle:{
             type:GraphQLString
         },
-        conductorName:{
+        conductorFullName:{
             type:GraphQLString
         },
         conductorAddress:{
@@ -106,7 +106,7 @@ export const DeviceInputType = new GraphQLInputObjectType({
         placaVehicle:{
             type:GraphQLString
         },
-        conductorName:{
+        conductorFullName:{
             type:GraphQLString
         },
         conductorAddress:{
