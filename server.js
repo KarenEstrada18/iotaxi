@@ -63,6 +63,12 @@ app.post('/login', (req,res) => {
 })
 
 app.post('/createMessage',(req,res) => {
+
+    User.findByIdAndUpdate(message.device,{$push:{devices:message.timestamp}},(err,user) => {
+        return user;
+    })
+
+
     let message = req.body
     console.log(message)
     Message.create(message).then((message) => {
@@ -116,15 +122,7 @@ app.post('/addDevice',(req,res) => {
         
 })
 
-app.use('/graphql',(req,res,next) => {
-    const token  = req.headers['authorization'];
-    try{
-        req.user = verifyToken(token)
-        next();
-    }catch(error){
-        res.status(401).json({message:error.message})
-    }
-})
+
 
 app.use('/graphql',graphQLHTTP((req,res)=>({
     schema,
