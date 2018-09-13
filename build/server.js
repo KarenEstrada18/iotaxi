@@ -38,7 +38,7 @@ var _graphql2 = _interopRequireDefault(_graphql);
 
 var _create = require('./src/resolvers/create');
 
-var _verify = require('./src/resolvers/verify');
+var _verify2 = require('./src/resolvers/verify');
 
 var _dateFromTimestamp = require('date-from-timestamp');
 
@@ -153,6 +153,16 @@ app.post('/addDevice', function (req, res) {
         console.log(err);
         return res.json(err);
     });
+});
+
+app.use('/graphql', function (req, res, next) {
+    var token = req.headers['authorization'];
+    try {
+        req.user = (0, _verify.verifyToken)(token);
+        next();
+    } catch (error) {
+        res.status(401).json({ message: error.message });
+    }
 });
 
 app.use('/graphql', (0, _expressGraphql2.default)(function (req, res) {
