@@ -38,7 +38,7 @@ var _graphql2 = _interopRequireDefault(_graphql);
 
 var _create = require('./src/resolvers/create');
 
-var _verify2 = require('./src/resolvers/verify');
+var _verify = require('./src/resolvers/verify');
 
 var _dateFromTimestamp = require('date-from-timestamp');
 

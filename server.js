@@ -122,15 +122,15 @@ app.post('/addDevice',(req,res) => {
         
 })
 
-app.use('/graphql', function (req, res, next) {
-    var token = req.headers['authorization'];
-    try {
-        req.user = (0, _verify.verifyToken)(token);
+app.use('/graphql',(req,res,next) => {
+    const token  = req.headers['authorization'];
+    try{
+        req.user = verifyToken(token)
         next();
-    } catch (error) {
-        res.status(401).json({ message: error.message });
+    }catch(error){
+        res.status(401).json({message:error.message})
     }
-});
+})
 
 app.use('/graphql',graphQLHTTP((req,res)=>({
     schema,
