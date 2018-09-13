@@ -11,7 +11,6 @@ const DeviceSchema = new Schema({
         type:String,
         required:true
     },
-
     "marcaVehicle":{
         type:String
     },
