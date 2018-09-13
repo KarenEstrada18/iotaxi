@@ -31,7 +31,7 @@ var DeviceSchema = new Schema({
     "placaVehicle": {
         type: String
     },
-    "conductorName": {
+    "conductorFullName": {
         type: String
     },
     "conductorAddress": {

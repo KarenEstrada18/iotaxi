@@ -36,7 +36,7 @@ var DeviceType = exports.DeviceType = new _graphql.GraphQLObjectType({
             placaVehicle: {
                 type: _graphql.GraphQLString
             },
-            conductorName: {
+            conductorFullName: {
                 type: _graphql.GraphQLString
             },
             conductorAddress: {
@@ -114,7 +114,7 @@ var DeviceInputType = exports.DeviceInputType = new _graphql.GraphQLInputObjectT
             placaVehicle: {
                 type: _graphql.GraphQLString
             },
-            conductorName: {
+            conductorFullName: {
                 type: _graphql.GraphQLString
             },
             conductorAddress: {
