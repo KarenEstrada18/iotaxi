@@ -1,6 +1,9 @@
 {
   "name": "backendiotaxi",
   "version": "1.0.0",
+  "engines": {
+    "node": "8.9.4"
+  },
   "description": "Procesamiento de informacion dell backend sigfox",
   "main": "server.js",
   "scripts": {
