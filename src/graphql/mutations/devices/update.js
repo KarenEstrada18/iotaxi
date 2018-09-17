@@ -2,11 +2,11 @@ import {
     GraphQLNonNull,
     GraphQLID
 } from 'graphql'
-import User from '../../../models/users';
-import {UserInputType,UserType} from '../../types/users';
+import Device from '../../../models/devices';
+import {DeviceInputType,DeviceType} from '../../types/devices';
 
 export default {
-    type:UserInputType,
+    type:DeviceType,
     args:{
         id:{
             name:"ID",
@@ -14,13 +14,13 @@ export default {
         },
         data:{
             name:"data",
-            type:new GraphQLNonNull(UserInputType)
+            type:new GraphQLNonNull(DeviceInputType)
         }
     },
     resolve(root,params){
-        return User.findByIdAndUpdate(params.id,{$set:{...params.data}}
-        ).then((user)=> {
-            return user
+        return Device.findByIdAndUpdate(params.id,{$set:{...params.data}}
+        ).then((device)=> {
+            return device
         }).catch((err)=>{
             throw new Error("Error al hacer update")
         })

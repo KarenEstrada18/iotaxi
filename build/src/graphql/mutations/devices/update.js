@@ -8,16 +8,16 @@ var _extends = Object.assign || function (target) { for (var i = 1; i < argument
 
 var _graphql = require('graphql');
 
-var _users = require('../../../models/users');
+var _devices = require('../../../models/devices');
 
-var _users2 = _interopRequireDefault(_users);
+var _devices2 = _interopRequireDefault(_devices);
 
-var _users3 = require('../../types/users');
+var _devices3 = require('../../types/devices');
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 exports.default = {
-    type: _users3.UserInputType,
+    type: _devices3.DeviceType,
     args: {
         id: {
             name: "ID",
@@ -25,12 +25,12 @@ exports.default = {
         },
         data: {
             name: "data",
-            type: new _graphql.GraphQLNonNull(_users3.UserInputType)
+            type: new _graphql.GraphQLNonNull(_devices3.DeviceInputType)
         }
     },
     resolve: function resolve(root, params) {
-        return _users2.default.findByIdAndUpdate(params.id, { $set: _extends({}, params.data) }).then(function (user) {
-            return user;
+        return _devices2.default.findByIdAndUpdate(params.id, { $set: _extends({}, params.data) }).then(function (device) {
+            return device;
         }).catch(function (err) {
             throw new Error("Error al hacer update");
         });
