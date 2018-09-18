@@ -99,10 +99,7 @@ app.post('/login', function (req, res) {
 });
 
 app.post('/createMessage', function (req, res) {
-    _users2.default.findByIdAndUpdate(message.device, { $push: { devices: message.timestamp } }, function (err, user) {
-        return user;
-    });
-
+    console.log(req.body);
     var message = req.body;
     console.log(message);
     _messages2.default.create(message).then(function (message) {

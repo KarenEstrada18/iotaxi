@@ -63,11 +63,7 @@ app.post('/login', (req,res) => {
 })
 
 app.post('/createMessage',(req,res) => {
-    User.findByIdAndUpdate(message.device,{$push:{devices:message.timestamp}},(err,user) => {
-        return user;
-    })
-
-
+    console.log(req.body)
     let message = req.body
     console.log(message)
     Message.create(message).then((message) => {
