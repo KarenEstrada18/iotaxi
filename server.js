@@ -116,7 +116,7 @@ app.post('/updateDevice',(req,res) => {
     conductorTel:device.conductorTel,
     marcaVehicle:device.marcaVehicle,
     modeloVehicle:device.modeloVehicle,
-    placasVehicle:device.placasVehicle}}).then((device) => {
+    placaVehicle:device.placaVehicle}}).then((device) => {
         return res.status(200).json({"message":"Dispositivo Actualizado","id":device._id})
     }).catch((err) => {
         console.log(err);
