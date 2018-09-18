@@ -99,7 +99,6 @@ app.post('/login', function (req, res) {
 });
 
 app.post('/createMessage', function (req, res) {
-
     _users2.default.findByIdAndUpdate(message.device, { $push: { devices: message.timestamp } }, function (err, user) {
         return user;
     });
@@ -138,6 +137,25 @@ app.post('/createMessage', function (req, res) {
             }
         }
         return res.status(201).json({ "message": "Mensaje creado", "id": message._id });
+    }).catch(function (err) {
+        console.log(err);
+        return res.json(err);
+    });
+});
+
+app.post('/updateDevice', function (req, res) {
+    var device = req.body;
+    console.log(device);
+    _devices2.default.findByIdAndUpdate(device._id, { $set: { conductorFullName: device.conductorFullName,
+            conductorAddress: device.conductorAddress,
+            conductorDistrict: device.conductorDistrict,
+            conductorNumExt: device.conductorNumExt,
+            conductorNumInt: device.conductorNumInt,
+            conductorTel: device.conductorTel,
+            marcaVehicle: device.marcaVehicle,
+            modeloVehicle: device.modeloVehicle,
+            placasVehicle: device.placasVehicle } }).then(function (device) {
+        return res.status(200).json({ "message": "Dispositivo Actualizado", "id": device._id });
     }).catch(function (err) {
         console.log(err);
         return res.json(err);

@@ -63,7 +63,6 @@ app.post('/login', (req,res) => {
 })
 
 app.post('/createMessage',(req,res) => {
-
     User.findByIdAndUpdate(message.device,{$push:{devices:message.timestamp}},(err,user) => {
         return user;
     })
@@ -108,6 +107,25 @@ app.post('/createMessage',(req,res) => {
         console.log(err);
         return res.json(err)
     }) 
+})
+
+app.post('/updateDevice',(req,res) => {
+    let device = req.body
+    console.log(device)
+    Device.findByIdAndUpdate(device._id,{$set:{conductorFullName:device.conductorFullName,
+    conductorAddress:device.conductorAddress,
+    conductorDistrict:device.conductorDistrict,
+    conductorNumExt:device.conductorNumExt,
+    conductorNumInt:device.conductorNumInt,
+    conductorTel:device.conductorTel,
+    marcaVehicle:device.marcaVehicle,
+    modeloVehicle:device.modeloVehicle,
+    placasVehicle:device.placasVehicle}}).then((device) => {
+        return res.status(200).json({"message":"Dispositivo Actualizado","id":device._id})
+    }).catch((err) => {
+        console.log(err);
+        return res.json(err)
+    })
 })
 
 app.post('/addDevice',(req,res) => {
