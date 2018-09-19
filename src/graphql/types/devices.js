@@ -34,6 +34,21 @@ export const DeviceType = new GraphQLObjectType({
         placaVehicle:{
             type:GraphQLString
         },
+        image_url_vfront:{
+            type:GraphQLString
+        },
+        image_url_lfront:{
+            type:GraphQLString
+        },
+        image_url_rfront:{
+            type:GraphQLString
+        },
+        image_url_bfront:{
+            type:GraphQLString
+        },
+        image_url_conductor:{
+            type:GraphQLString
+        },
         conductorFullName:{
             type:GraphQLString
         },
@@ -110,6 +125,21 @@ export const DeviceInputType = new GraphQLInputObjectType({
             type:GraphQLString
         },
         placaVehicle:{
+            type:GraphQLString
+        },
+        image_url_vfront:{
+            type:GraphQLString
+        },
+        image_url_lfront:{
+            type:GraphQLString
+        },
+        image_url_rfront:{
+            type:GraphQLString
+        },
+        image_url_bfront:{
+            type:GraphQLString
+        },
+        image_url_conductor:{
             type:GraphQLString
         },
         conductorFullName:{

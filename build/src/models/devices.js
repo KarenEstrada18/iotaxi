@@ -34,6 +34,21 @@ var DeviceSchema = new Schema({
     "placaVehicle": {
         type: String
     },
+    "image_url_vfront": {
+        type: String
+    },
+    "image_url_lfront": {
+        type: String
+    },
+    "image_url_rfront": {
+        type: String
+    },
+    "image_url_bfront": {
+        type: String
+    },
+    "image_url_conductor": {
+        type: String
+    },
     "conductorFullName": {
         type: String
     },
