@@ -109,6 +109,7 @@ app.post('/updateDevice',(req,res) => {
     let device = req.body
     console.log(device)
     Device.findByIdAndUpdate(device._id,{$set:{conductorFullName:device.conductorFullName,
+    concecion:device.concesion,
     conductorAddress:device.conductorAddress,
     conductorDistrict:device.conductorDistrict,
     conductorNumExt:device.conductorNumExt,
