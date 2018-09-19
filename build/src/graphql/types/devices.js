@@ -39,16 +39,16 @@ var DeviceType = exports.DeviceType = new _graphql.GraphQLObjectType({
             placaVehicle: {
                 type: _graphql.GraphQLString
             },
-            image_url_vfront: {
+            image_url_fvehicle: {
                 type: _graphql.GraphQLString
             },
-            image_url_lfront: {
+            image_url_lvehicle: {
                 type: _graphql.GraphQLString
             },
-            image_url_rfront: {
+            image_url_rvehicle: {
                 type: _graphql.GraphQLString
             },
-            image_url_bfront: {
+            image_url_bvehicle: {
                 type: _graphql.GraphQLString
             },
             image_url_conductor: {
@@ -135,16 +135,16 @@ var DeviceInputType = exports.DeviceInputType = new _graphql.GraphQLInputObjectT
             placaVehicle: {
                 type: _graphql.GraphQLString
             },
-            image_url_vfront: {
+            image_url_fvehicle: {
                 type: _graphql.GraphQLString
             },
-            image_url_lfront: {
+            image_url_lvehicle: {
                 type: _graphql.GraphQLString
             },
-            image_url_rfront: {
+            image_url_rvehicle: {
                 type: _graphql.GraphQLString
             },
-            image_url_bfront: {
+            image_url_bvehicle: {
                 type: _graphql.GraphQLString
             },
             image_url_conductor: {
