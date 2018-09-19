@@ -17,6 +17,10 @@ var DeviceSchema = new Schema({
         type: String,
         required: true
     },
+    "concesion": {
+        type: String,
+        required: true
+    },
     "name": {
         type: String,
         required: true
@@ -48,7 +52,6 @@ var DeviceSchema = new Schema({
     "conductorTel": {
         type: String
     },
-
     "lastLocation": {
         type: String
     },

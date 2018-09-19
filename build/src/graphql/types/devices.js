@@ -23,6 +23,9 @@ var DeviceType = exports.DeviceType = new _graphql.GraphQLObjectType({
             _id: {
                 type: (0, _graphql.GraphQLNonNull)(_graphql.GraphQLID)
             },
+            concesion: {
+                type: _graphql.GraphQLString
+            },
             name: {
                 type: _graphql.GraphQLString
             },
@@ -96,6 +99,9 @@ var DeviceInputType = exports.DeviceInputType = new _graphql.GraphQLInputObjectT
     fields: function fields() {
         return {
             _id: {
+                type: _graphql.GraphQLString
+            },
+            concesion: {
                 type: _graphql.GraphQLString
             },
             name: {

@@ -18,6 +18,9 @@ export const DeviceType = new GraphQLObjectType({
         _id:{
             type:GraphQLNonNull(GraphQLID)
         },
+        concesion:{
+            type:GraphQLString
+        },
         name:{
             type:GraphQLString
         },
@@ -88,6 +91,9 @@ export const DeviceInputType = new GraphQLInputObjectType({
     description:"Agrega o modifica dispositivos en la bd",
     fields: () => ({
         _id:{
+            type:GraphQLString
+        },
+        concesion:{
             type:GraphQLString
         },
         name:{
