@@ -144,6 +144,7 @@ app.post('/updateDevice', function (req, res) {
     var device = req.body;
     console.log(device);
     _devices2.default.findByIdAndUpdate(device._id, { $set: { conductorFullName: device.conductorFullName,
+            concecion: device.concesion,
             conductorAddress: device.conductorAddress,
             conductorDistrict: device.conductorDistrict,
             conductorNumExt: device.conductorNumExt,
