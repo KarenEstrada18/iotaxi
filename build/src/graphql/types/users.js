@@ -29,6 +29,9 @@ var UserType = exports.UserType = new _graphql.GraphQLObjectType({
             lastname: {
                 type: _graphql.GraphQLString
             },
+            image_url: {
+                type: _graphql.GraphQLString
+            },
             email: {
                 type: _graphql.GraphQLString
             },
@@ -90,6 +93,9 @@ var UserInputType = exports.UserInputType = new _graphql.GraphQLInputObjectType(
                 type: _graphql.GraphQLString
             },
             lastname: {
+                type: _graphql.GraphQLString
+            },
+            image_url: {
                 type: _graphql.GraphQLString
             },
             email: {

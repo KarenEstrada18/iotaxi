@@ -23,6 +23,9 @@ export const UserType = new GraphQLObjectType({
         lastname:{
             type:GraphQLString
         },
+        image_url:{
+            type:GraphQLString
+        },
         email:{
             type:GraphQLString
         },
@@ -81,6 +84,9 @@ export const UserInputType = new GraphQLInputObjectType({
             type:GraphQLString
         },
         lastname:{
+            type:GraphQLString
+        },
+        image_url:{
             type:GraphQLString
         },
         email:{
