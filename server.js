@@ -117,7 +117,13 @@ app.post('/updateDevice',(req,res) => {
     conductorTel:device.conductorTel,
     marcaVehicle:device.marcaVehicle,
     modeloVehicle:device.modeloVehicle,
-    placaVehicle:device.placaVehicle}}).then((device) => {
+    placaVehicle:device.placaVehicle,
+    image_url_conductor:device.image_url_conductor,
+    image_url_fvehicle:device.image_url_fvehicle,
+    image_url_lvehicle:device.image_url_lvehicle,
+    image_url_rvehicle:device.image_url_rvehicle,
+    image_url_bvehicle:device.image_url_bvehicle,
+    }}).then((device) => {
         return res.status(200).json({"message":"Dispositivo Actualizado","id":device._id})
     }).catch((err) => {
         console.log(err);
