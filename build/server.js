@@ -140,6 +140,25 @@ app.post('/createMessage', function (req, res) {
     });
 });
 
+app.post('/updateMe', function (req, res) {
+    var user = req.body;
+    console.log(user);
+    _users2.default.findByIdAndUpdate(user._id, { $set: {
+            street: user.street, district: user.district,
+            image_url: user.image_url,
+            numExt: user.numExt,
+            numInt: user.numInt,
+            city: user.city,
+            country: user.country,
+            cc: user.cc,
+            tel: user.tel } }).then(function (user) {
+        return res.status(200).json({ "message": "Perfil Actualizado", "id": user._id });
+    }).catch(function (err) {
+        console.log(err);
+        return res.json(err);
+    });
+});
+
 app.post('/updateDevice', function (req, res) {
     var device = req.body;
     console.log(device);

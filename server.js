@@ -105,6 +105,25 @@ app.post('/createMessage',(req,res) => {
     }) 
 })
 
+app.post('/updateMe',(req,res) => {
+    let user = req.body
+    console.log(user)
+    User.findByIdAndUpdate(user._id,{$set:{
+        street:user.street, district:user.district, 
+        image_url:user.image_url, 
+        numExt:user.numExt, 
+        numInt:user.numInt, 
+        city:user.city, 
+        country:user.country, 
+        cc:user.cc, 
+        tel:user.tel}}).then((user) => {
+            return res.status(200).json({"message":"Perfil Actualizado","id":user._id})
+        }).catch((err) => {
+            console.log(err);
+            return res.json(err)
+        })
+})
+
 app.post('/updateDevice',(req,res) => {
     let device = req.body
     console.log(device)
