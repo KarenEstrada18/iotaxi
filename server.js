@@ -116,7 +116,7 @@ app.post('/updateMe',(req,res) => {
         city:user.city, 
         country:user.country, 
         cc:user.cc, 
-        tel:user.tel}}).then((user) => {
+        telefono:user.tel}}).then((user) => {
             return res.status(200).json({"message":"Perfil Actualizado","id":user._id})
         }).catch((err) => {
             console.log(err);

@@ -151,7 +151,7 @@ app.post('/updateMe', function (req, res) {
             city: user.city,
             country: user.country,
             cc: user.cc,
-            tel: user.tel } }).then(function (user) {
+            telefono: user.tel } }).then(function (user) {
         return res.status(200).json({ "message": "Perfil Actualizado", "id": user._id });
     }).catch(function (err) {
         console.log(err);
