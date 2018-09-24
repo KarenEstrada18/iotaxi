@@ -3,7 +3,7 @@ import mongoose from 'mongoose';
 const Schema = mongoose.Schema
 
 const DeviceSchema = new Schema({
-    "_id":{
+    "sigfox":{
         type:String,
         required:true
     },
@@ -77,8 +77,7 @@ const DeviceSchema = new Schema({
         default:0
     },
     "user":{
-        type:Schema.Types.ObjectId,
-        ref:'Users'
+        type:String
     },
     "create_at":{
         type:Date,

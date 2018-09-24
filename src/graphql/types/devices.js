@@ -18,6 +18,9 @@ export const DeviceType = new GraphQLObjectType({
         _id:{
             type:GraphQLNonNull(GraphQLID)
         },
+        sigfox:{
+            type:GraphQLString
+        },
         concesion:{
             type:GraphQLString
         },
@@ -84,11 +87,12 @@ export const DeviceType = new GraphQLObjectType({
             type:GraphQLFloat
         },
         user:{
-            type:UserType,
+            type:GraphQLString
+            /*UserType,
             resolve(device){
                 const {user} = device
                 return User.findById(user).exec()
-            }
+            }*/
         },
         create_at:{
             type:GraphQLString
@@ -105,7 +109,7 @@ export const DeviceInputType = new GraphQLInputObjectType({
     name:"addDevices",
     description:"Agrega o modifica dispositivos en la bd",
     fields: () => ({
-        _id:{
+        sigfox:{
             type:GraphQLString
         },
         concesion:{
