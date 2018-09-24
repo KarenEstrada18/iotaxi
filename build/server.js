@@ -99,9 +99,10 @@ app.post('/login', function (req, res) {
 });
 
 app.post('/createMessage', function (req, res) {
-    console.log(req.body);
     var message = req.body;
     console.log(message);
+    var dev = null;
+
     _messages2.default.create(message).then(function (message) {
         console.log(message.timestamp, "aqui chido");
         var hora = Unix_timestamp(message.timestamp);
@@ -109,7 +110,7 @@ app.post('/createMessage', function (req, res) {
 
         if (hora >= '4:00' && hora <= '5:00') {
             console.log("ENTRO RESET");
-            _devices2.default.findByIdAndUpdate(message.device, { $set: { contEfectivo: 0, contKm: 0, contTime: 0, contTravel: 0 } }, function (err, dev) {
+            _devices2.default.findOneAndUpdate({ sigfox: message.device }, { $set: { contEfectivo: 0, contKm: 0, contTime: 0, contTravel: 0 } }, function (err, dev) {
                 return dev;
             });
         }
@@ -123,12 +124,13 @@ app.post('/createMessage', function (req, res) {
                 var km = Number(message.data.substr(6, 3));
                 var time = Number(message.data.substr(9, 3));
                 console.log(cash, ",", km, ",", time);
-                _devices2.default.findByIdAndUpdate(message.device, { $inc: { contEfectivo: cash, contKm: km, contTime: time, contTravel: 1 } }, function (err, dev) {
+
+                _devices2.default.findOneAndUpdate({ sigfox: message.device }, { $inc: { contEfectivo: cash, contKm: km, contTime: time, contTravel: 1 } }, function (err, dev) {
                     return dev;
                 });
                 console.log("salio");
             } else {
-                _devices2.default.findByIdAndUpdate(message.device, { $set: { lastLocation: message.data } }, function (err, dev) {
+                _devices2.default.findOneAndUpdate({ sigfox: message.device }, { $set: { lastLocation: message.data } }, function (err, dev) {
                     return dev;
                 });
             }
