@@ -189,11 +189,31 @@ app.post('/addDevice', function (req, res) {
     var device = req.body;
     console.log(device);
     _devices2.default.create(device).then(function (device) {
+        console.log(device.user);
         return res.status(201).json({ "message": "Dispositivo Creado", "id": device._id });
     }).catch(function (err) {
         console.log(err);
         return res.json(err);
     });
+});
+
+app.post("/pushDevice", function (req, res) {
+    var user = req.body;
+    console.log(user);
+    var usuario = _devices2.default.findOne({ _id: user.device }).then(function (device) {
+        _users2.default.findByIdAndUpdate(user.id, { $push: { devices: device._id } }).then(function (user) {
+            console.log(user);
+            return res.status(201).json({ "message": "Usuario actualizado", "id": user._id });
+        }).catch(function (err) {
+            console.log(err);
+            return res.json(err);
+        });
+    });
+    console.log(usuario._id);
+
+    //User.findByIdAndUpdate(user.id,{$push:{devices:user.device}}).then((user) => {
+    //  return User.findById(user.id).exec()
+    //})
 });
 
 app.use('/graphql', function (req, res, next) {

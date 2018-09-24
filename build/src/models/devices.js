@@ -13,7 +13,7 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
 var Schema = _mongoose2.default.Schema;
 
 var DeviceSchema = new Schema({
-    "_id": {
+    "sigfox": {
         type: String,
         required: true
     },
@@ -87,8 +87,7 @@ var DeviceSchema = new Schema({
         default: 0
     },
     "user": {
-        type: Schema.Types.ObjectId,
-        ref: 'Users'
+        type: String
     },
     "create_at": {
         type: Date,

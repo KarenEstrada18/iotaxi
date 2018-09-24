@@ -23,6 +23,9 @@ var DeviceType = exports.DeviceType = new _graphql.GraphQLObjectType({
             _id: {
                 type: (0, _graphql.GraphQLNonNull)(_graphql.GraphQLID)
             },
+            sigfox: {
+                type: _graphql.GraphQLString
+            },
             concesion: {
                 type: _graphql.GraphQLString
             },
@@ -89,12 +92,12 @@ var DeviceType = exports.DeviceType = new _graphql.GraphQLObjectType({
                 type: _graphql.GraphQLFloat
             },
             user: {
-                type: _users.UserType,
-                resolve: function resolve(device) {
-                    var user = device.user;
-
-                    return _users3.default.findById(user).exec();
-                }
+                type: _graphql.GraphQLString
+                /*UserType,
+                resolve(device){
+                    const {user} = device
+                    return User.findById(user).exec()
+                }*/
             },
             create_at: {
                 type: _graphql.GraphQLString
@@ -113,7 +116,7 @@ var DeviceInputType = exports.DeviceInputType = new _graphql.GraphQLInputObjectT
     description: "Agrega o modifica dispositivos en la bd",
     fields: function fields() {
         return {
-            _id: {
+            sigfox: {
                 type: _graphql.GraphQLString
             },
             concesion: {
