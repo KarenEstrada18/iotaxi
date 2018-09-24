@@ -63,9 +63,10 @@ app.post('/login', (req,res) => {
 })
 
 app.post('/createMessage',(req,res) => {
-    console.log(req.body)
     let message = req.body
     console.log(message)
+    let dev = null
+    
     Message.create(message).then((message) => {
         console.log(message.timestamp,"aqui chido")
         let hora = Unix_timestamp(message.timestamp);
@@ -73,7 +74,7 @@ app.post('/createMessage',(req,res) => {
 
         if(hora>= '4:00' && hora <='5:00'){
             console.log("ENTRO RESET")
-            Device.findByIdAndUpdate(message.device,{$set:{contEfectivo:0, contKm:0, contTime:0, contTravel:0}},(err,dev) => {
+            Device.findOneAndUpdate({sigfox:message.device},{$set:{contEfectivo:0, contKm:0, contTime:0, contTravel:0}},(err,dev) => {
                 return dev
             })
         }
@@ -87,13 +88,15 @@ app.post('/createMessage',(req,res) => {
                 let km = Number(message.data.substr(6,3));
                 let time = Number(message.data.substr(9,3));
                 console.log(cash,",",km,",",time)
-                Device.findByIdAndUpdate(message.device,{$inc:{contEfectivo:cash, contKm:km, contTime:time, contTravel:1}},(err,dev) => {
+                
+
+                Device.findOneAndUpdate({sigfox:message.device},{$inc:{contEfectivo:cash, contKm:km, contTime:time, contTravel:1}},(err,dev) => {
                     return dev
                 })
                 console.log("salio")
 
             }else{
-                Device.findByIdAndUpdate(message.device,{$set:{lastLocation:message.data}},(err,dev) => {
+                Device.findOneAndUpdate({sigfox:message.device},{$set:{lastLocation:message.data}}, (err,dev) => {
                     return dev
                 })
             }
