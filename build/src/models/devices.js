@@ -15,11 +15,13 @@ var Schema = _mongoose2.default.Schema;
 var DeviceSchema = new Schema({
     "sigfox": {
         type: String,
-        required: true
+        required: true,
+        unique: true
     },
     "concesion": {
         type: String,
-        required: true
+        required: true,
+        unique: true
     },
     "name": {
         type: String,

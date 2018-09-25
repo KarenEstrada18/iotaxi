@@ -191,6 +191,9 @@ app.post('/addDevice', function (req, res) {
     var device = req.body;
     console.log(device);
     _devices2.default.create(device).then(function (device) {
+        _users2.default.findByIdAndUpdate(device.user, { $push: { devices: device._id } }, function (err, user) {
+            console.log(user);
+        });
         console.log(device.user);
         return res.status(201).json({ "message": "Dispositivo Creado", "id": device._id });
     }).catch(function (err) {

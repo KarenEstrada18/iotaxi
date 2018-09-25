@@ -157,6 +157,9 @@ app.post('/addDevice',(req,res) => {
     let device = req.body
     console.log(device)
     Device.create(device).then((device) => {
+        User.findByIdAndUpdate(device.user,{$push:{devices:device._id}}, (err,user) =>{
+            console.log(user)
+        })
         console.log(device.user)
         return res.status(201).json({"message":"Dispositivo Creado","id":device._id})
     }).catch((err)=>{
