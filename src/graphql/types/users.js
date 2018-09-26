@@ -56,9 +56,10 @@ export const UserType = new GraphQLObjectType({
         devices:{
             type:GraphQLList(DeviceType), 
             resolve(user){
-                const {device} = user
-                return Device.findById(device).pupolate('devices').then((dev) => {
+                const {devices} = user
+                return Device.findById(devices).then((dev) => {
                     console.log(dev)
+                    return dev
                 })
             }
         },

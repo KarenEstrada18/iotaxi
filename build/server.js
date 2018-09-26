@@ -208,6 +208,7 @@ app.post("/me", function (req, res) {
 
     var devices = _users2.default.findById(me.id, { select: 'devices' }).populate('devices').then(function (user) {
         console.log(user);
+        return res.json(user);
     }).catch(function (err) {
         return res.json(err);
     });
