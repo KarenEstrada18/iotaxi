@@ -173,11 +173,13 @@ app.post("/me",(req,res) => {
     let me = req.body
     console.log(me)
     
-    User.findById(me.id,{select:'devices'}).populate('devices').then((user) => {
-        return res.json(user.devices)
+    let devices = User.findById(me.id,{select:'devices'}).populate('devices').then((user) => {
+        console.log(user)
     }).catch((err) =>{
         return res.json(err)
     })
+    console.log("devices",devices)
+    return devices;
 })
 
 

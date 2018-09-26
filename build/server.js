@@ -206,11 +206,13 @@ app.post("/me", function (req, res) {
     var me = req.body;
     console.log(me);
 
-    _users2.default.findById(me.id, { select: 'devices' }).populate('devices').then(function (user) {
-        return res.json(user.devices);
+    var devices = _users2.default.findById(me.id, { select: 'devices' }).populate('devices').then(function (user) {
+        console.log(user);
     }).catch(function (err) {
         return res.json(err);
     });
+    console.log("devices", devices);
+    return devices;
 });
 
 app.use('/graphql', function (req, res, next) {
