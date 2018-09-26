@@ -174,8 +174,7 @@ app.post("/me",(req,res) => {
     console.log(me)
     
     User.findById(me.id,{select:'devices'}).populate('devices').then((user) => {
-        console.log(user)
-        return user
+        return res.json(user.devices)
     }).catch((err) =>{
         return res.json(err)
     })
