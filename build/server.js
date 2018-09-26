@@ -202,23 +202,16 @@ app.post('/addDevice', function (req, res) {
     });
 });
 
-app.post("/pushDevice", function (req, res) {
-    var user = req.body;
-    console.log(user);
-    var usuario = _devices2.default.findOne({ _id: user.device }).then(function (device) {
-        _users2.default.findByIdAndUpdate(user.id, { $push: { devices: device._id } }).then(function (user) {
-            console.log(user);
-            return res.status(201).json({ "message": "Usuario actualizado", "id": user._id });
-        }).catch(function (err) {
-            console.log(err);
-            return res.json(err);
-        });
-    });
-    console.log(usuario._id);
+app.post("/me", function (req, res) {
+    var me = req.body;
+    console.log(me);
 
-    //User.findByIdAndUpdate(user.id,{$push:{devices:user.device}}).then((user) => {
-    //  return User.findById(user.id).exec()
-    //})
+    _users2.default.findById(me.id, { select: 'devices' }).populate('devices').then(function (user) {
+        console.log(user);
+        return user;
+    }).catch(function (err) {
+        return res.json(err);
+    });
 });
 
 app.use('/graphql', function (req, res, next) {

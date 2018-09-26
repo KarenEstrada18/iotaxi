@@ -64,7 +64,9 @@ var UserType = exports.UserType = new _graphql.GraphQLObjectType({
                 resolve: function resolve(user) {
                     var device = user.device;
 
-                    return _devices3.default.findById(device).exec();
+                    return _devices3.default.findById(device).pupolate('devices').then(function (dev) {
+                        console.log(dev);
+                    });
                 }
             },
             is_admin: {

@@ -57,7 +57,9 @@ export const UserType = new GraphQLObjectType({
             type:GraphQLList(DeviceType), 
             resolve(user){
                 const {device} = user
-                return Device.findById(device).exec()
+                return Device.findById(device).pupolate('devices').then((dev) => {
+                    console.log(dev)
+                })
             }
         },
         is_admin:{

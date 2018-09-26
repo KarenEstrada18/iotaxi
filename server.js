@@ -169,24 +169,18 @@ app.post('/addDevice',(req,res) => {
         
 })
 
-app.post("/pushDevice",(req,res) => {
-    let user = req.body
-    console.log(user)
-    let usuario = Device.findOne({_id:user.device}).then((device) => {
-        User.findByIdAndUpdate(user.id,{$push:{devices:device._id}}).then((user) => {
-            console.log(user)
-            return res.status(201).json({"message":"Usuario actualizado","id":user._id})
-        }).catch((err) => {
-            console.log(err)
-            return res.json(err)
-        })
-    })
-    console.log(usuario._id) 
+app.post("/me",(req,res) => {
+    let me = req.body
+    console.log(me)
     
-    //User.findByIdAndUpdate(user.id,{$push:{devices:user.device}}).then((user) => {
-      //  return User.findById(user.id).exec()
-    //})
+    User.findById(me.id,{select:'devices'}).populate('devices').then((user) => {
+        console.log(user)
+        return user
+    }).catch((err) =>{
+        return res.json(err)
+    })
 })
+
 
 app.use('/graphql',(req,res,next) => {
     const token  = req.headers['authorization'];

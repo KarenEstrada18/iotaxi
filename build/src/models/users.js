@@ -64,10 +64,10 @@ var UserSchema = new Schema({
     "telefono": {
         type: String
     },
-    "devices": {
-        type: [Schema.Types.ObjectId],
+    "devices": [{
+        type: Schema.Types.ObjectId,
         ref: "Devices"
-    },
+    }],
     "is_admin": {
         type: Boolean
     },
