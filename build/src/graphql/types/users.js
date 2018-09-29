@@ -64,7 +64,7 @@ var UserType = exports.UserType = new _graphql.GraphQLObjectType({
                 resolve: function resolve(user) {
                     var devices = user.devices;
 
-                    return _devices3.default.findById(devices).then(function (dev) {
+                    return _devices3.default.find({ _id: { $in: devices } }).then(function (dev) {
                         console.log(dev);
                         return dev;
                     });
