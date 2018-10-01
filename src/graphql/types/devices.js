@@ -88,11 +88,6 @@ export const DeviceType = new GraphQLObjectType({
         },
         user:{
             type:GraphQLString
-            /*UserType,
-            resolve(device){
-                const {user} = device
-                return User.findById(user).exec()
-            }*/
         },
         create_at:{
             type:GraphQLString

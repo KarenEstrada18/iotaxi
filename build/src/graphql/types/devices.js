@@ -93,11 +93,6 @@ var DeviceType = exports.DeviceType = new _graphql.GraphQLObjectType({
             },
             user: {
                 type: _graphql.GraphQLString
-                /*UserType,
-                resolve(device){
-                    const {user} = device
-                    return User.findById(user).exec()
-                }*/
             },
             create_at: {
                 type: _graphql.GraphQLString
