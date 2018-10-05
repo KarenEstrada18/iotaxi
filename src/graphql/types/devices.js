@@ -144,7 +144,10 @@ export const DeviceInputType = new GraphQLInputObjectType({
         image_url_conductor:{
             type:GraphQLString
         },
-        conductorFullName:{
+        conductorName:{
+            type:GraphQLString
+        },
+        conductorLastname:{
             type:GraphQLString
         },
         conductorAddress:{
