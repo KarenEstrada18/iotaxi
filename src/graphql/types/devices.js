@@ -52,7 +52,10 @@ export const DeviceType = new GraphQLObjectType({
         image_url_conductor:{
             type:GraphQLString
         },
-        conductorFullName:{
+        conductorName:{
+            type:GraphQLString
+        },
+        conductorLastname:{
             type:GraphQLString
         },
         conductorAddress:{
