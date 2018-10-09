@@ -34,6 +34,9 @@ export const DeviceType = new GraphQLObjectType({
         modeloVehicle:{
             type:GraphQLString
         },
+        anioVehicle:{
+            type:GraphQLString
+        },
         placaVehicle:{
             type:GraphQLString
         },
@@ -124,6 +127,9 @@ export const DeviceInputType = new GraphQLInputObjectType({
             type:GraphQLString
         },
         modeloVehicle:{
+            type:GraphQLString
+        },
+        anioVehicle:{
             type:GraphQLString
         },
         placaVehicle:{

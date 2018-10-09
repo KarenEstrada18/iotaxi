@@ -39,6 +39,9 @@ var DeviceType = exports.DeviceType = new _graphql.GraphQLObjectType({
             modeloVehicle: {
                 type: _graphql.GraphQLString
             },
+            anioVehicle: {
+                type: _graphql.GraphQLString
+            },
             placaVehicle: {
                 type: _graphql.GraphQLString
             },
@@ -131,6 +134,9 @@ var DeviceInputType = exports.DeviceInputType = new _graphql.GraphQLInputObjectT
                 type: _graphql.GraphQLString
             },
             modeloVehicle: {
+                type: _graphql.GraphQLString
+            },
+            anioVehicle: {
                 type: _graphql.GraphQLString
             },
             placaVehicle: {

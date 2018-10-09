@@ -183,7 +183,6 @@ app.post("/me",(req,res) => {
     return devices;
 })
 
-
 app.use('/graphql',(req,res,next) => {
     const token  = req.headers['authorization'];
     try{

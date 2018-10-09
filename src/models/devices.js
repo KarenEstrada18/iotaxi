@@ -23,6 +23,9 @@ const DeviceSchema = new Schema({
     "modeloVehicle":{
         type:String
     },
+    "anioVehicle":{
+        type:String
+    },
     "placaVehicle":{
         type:String
     },
