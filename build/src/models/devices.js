@@ -51,7 +51,10 @@ var DeviceSchema = new Schema({
     "image_url_conductor": {
         type: String
     },
-    "conductorFullName": {
+    "conductorName": {
+        type: String
+    },
+    "conductorLastname": {
         type: String
     },
     "conductorAddress": {

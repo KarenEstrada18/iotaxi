@@ -57,7 +57,10 @@ var DeviceType = exports.DeviceType = new _graphql.GraphQLObjectType({
             image_url_conductor: {
                 type: _graphql.GraphQLString
             },
-            conductorFullName: {
+            conductorName: {
+                type: _graphql.GraphQLString
+            },
+            conductorLastname: {
                 type: _graphql.GraphQLString
             },
             conductorAddress: {
@@ -148,7 +151,10 @@ var DeviceInputType = exports.DeviceInputType = new _graphql.GraphQLInputObjectT
             image_url_conductor: {
                 type: _graphql.GraphQLString
             },
-            conductorFullName: {
+            conductorName: {
+                type: _graphql.GraphQLString
+            },
+            conductorLastname: {
                 type: _graphql.GraphQLString
             },
             conductorAddress: {
