@@ -63,9 +63,39 @@ app.post('/login', (req,res) => {
     })
 })
 
+//Analiza los mensajes
 app.post('/createMessage',(req,res) => {
     let message = req.body
     console.log(message.device)
+
+    console.log(message.timestamp,"aqui chido")
+    let hora = Unix_timestamp(message.timestamp);
+    console.log(hora)
+
+    if(hora>= '4:00' && hora <='5:00'){
+        console.log("ENTRO RESET")
+        Device.findOne({sigfox:message.device}).exec((err,dev)=>{
+            console.log("Reset p1",dev)
+            let json = {
+                "contEfectivo":dev.contEfectivo, 
+                "contKm":dev.contKm, 
+                "contTime":dev.contTime, 
+                "contTravel":dev.contTravel, 
+                "initTravel":dev.initTravel
+            }
+            Record.create(json).then((record)=>{
+                console.log(record)
+                Device.findOneAndUpdate({sigfox:message.device},{$push:{records:record._id}},(err,dev) => {
+                    return dev
+                })    
+                return record
+            })
+            Device.findOneAndUpdate({sigfox:message.device},{$set:{contEfectivo:0, contKm:0, contTime:0, contTravel:0, initTravel:[]}},(err,dev) => {
+                return dev
+            })
+        })
+        
+    }
 
     if(message.data.length === 6){
         console.log("entro",message)
@@ -79,77 +109,29 @@ app.post('/createMessage',(req,res) => {
         console.log("DEVOLVIO",dispositivo)
         /**/
     }
-    
-    Message.create(message).then((message) => {
-        console.log(message.timestamp,"aqui chido")
-        let hora = Unix_timestamp(message.timestamp);
-        console.log(hora)
 
-        if(hora>= '4:00' && hora <='5:00'){
-            console.log("ENTRO RESET")
-            Device.findOne({sigfox:message.device}).exec((err,dev)=>{
-                console.log("Reset p1",dev)
-                let json = {
-                    "contEfectivo":dev.contEfectivo, 
-                    "contKm":dev.contKm, 
-                    "contTime":dev.contTime, 
-                    "contTravel":dev.contTravel, 
-                    "initTravel":dev.initTravel
-                }
-                Record.create(json).then((record)=>{
-                    console.log(record)
-                    Device.findOneAndUpdate({sigfox:message.device},{$push:{records:record._id}},(err,dev) => {
-                        return dev
-                    })    
-                    return record
-                })
-                Device.findOneAndUpdate({sigfox:message.device},{$set:{contEfectivo:0, contKm:0, contTime:0, contTravel:0, initTravel:[]}},(err,dev) => {
-                    return dev
-                })
-            })
+    if(message.data.length === 12){
+        if(message.data.indexOf('00') === 0 || message.data.indexOf('01') === 0){
+            console.log("entro")
+            let pesos = message.data.substr(0,4);
+            let cent = message.data.substr(4,2);
+            let cash = Number(pesos+"."+cent);
+            let km = Number(message.data.substr(6,3));
+            let time = Number(message.data.substr(9,3));
+            console.log(cash,",",km,",",time)
             
-        }
 
-        if(message.data.length === 6){
-            console.log("entro",message)
-            let dispositivo = Device.findOne({sigfox:message.device}).exec((err,dev)=>{
-                console.log("DEVOLVIO 0",dev)
-                Device.findOneAndUpdate({sigfox:message.device},{$push:{initTravel:dev.lastLocation}},(err,dev) => {
-                    return dev
-                })
-                return dev;
+            Device.findOneAndUpdate({sigfox:message.device},{$inc:{contEfectivo:cash, contKm:km, contTime:time, contTravel:1}},(err,dev) => {
+                return dev
             })
-            console.log("DEVOLVIO",dispositivo)
-            /**/
+            console.log("salio")
+
+        }else{
+            Device.findOneAndUpdate({sigfox:message.device},{$set:{lastLocation:message.data}}, (err,dev) => {
+                return dev
+            })
         }
-
-        if(message.data.length === 12){
-            if(message.data.indexOf('00') === 0 || message.data.indexOf('01') === 0){
-                console.log("entro")
-                let pesos = message.data.substr(0,4);
-                let cent = message.data.substr(4,2);
-                let cash = Number(pesos+"."+cent);
-                let km = Number(message.data.substr(6,3));
-                let time = Number(message.data.substr(9,3));
-                console.log(cash,",",km,",",time)
-                
-
-                Device.findOneAndUpdate({sigfox:message.device},{$inc:{contEfectivo:cash, contKm:km, contTime:time, contTravel:1}},(err,dev) => {
-                    return dev
-                })
-                console.log("salio")
-
-            }else{
-                Device.findOneAndUpdate({sigfox:message.device},{$set:{lastLocation:message.data}}, (err,dev) => {
-                    return dev
-                })
-            }
-        }
-        return res.status(201).json({"message":"Mensaje creado", "id":message._id})
-    }).catch((err)=>{
-        console.log(err);
-        return res.json(err)
-    }) 
+    } 
 })
 
 app.post('/updateMe',(req,res) => {
