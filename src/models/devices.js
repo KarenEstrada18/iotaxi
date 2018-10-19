@@ -65,6 +65,14 @@ const DeviceSchema = new Schema({
     "conductorTel":{
         type:String
     },
+    "velocidadMaxima":{
+        type:String,
+        default:0
+    },
+    "initTravel":[{
+        type:String,
+        default:[]
+    }],
     "lastLocation":{
         type:String
     },
@@ -87,6 +95,10 @@ const DeviceSchema = new Schema({
     "user":{
         type:String
     },
+    "records":[{
+        type:Schema.Types.ObjectId,
+        ref:"Records"
+    }],
     "create_at":{
         type:Date,
         default: new Date()

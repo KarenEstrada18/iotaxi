@@ -1,6 +1,7 @@
 import {
     GraphQLInputObjectType,
     GraphQLString,
+    GraphQLList,
     GraphQLID,
     GraphQLObjectType,
     GraphQLFloat,
@@ -8,8 +9,8 @@ import {
     GraphQLBoolean,
     GraphQLNonNull
 } from 'graphql'
-import {UserType} from './users';
-import User from '../../models/users';
+import {RecordType} from './records';
+import Record from '../../models/records';
 
 export const DeviceType = new GraphQLObjectType({
     name:"ListDevices",
@@ -76,7 +77,12 @@ export const DeviceType = new GraphQLObjectType({
         conductorTel:{
             type:GraphQLString
         },
-
+        velocidadMaxima:{
+            type:GraphQLString
+        },
+        initTravel:{
+            type:GraphQLList(GraphQLString)
+        },
         lastLocation:{
             type:GraphQLString
         },
@@ -94,6 +100,15 @@ export const DeviceType = new GraphQLObjectType({
         },
         user:{
             type:GraphQLString
+        },
+        records:{
+            type:GraphQLList(RecordType),
+            resolve(device){
+                const {records} = device
+                return Record.find({_id:{$in:records}}).then((rec) => {
+                    return rec
+                })
+            }
         },
         create_at:{
             type:GraphQLString
@@ -122,7 +137,9 @@ export const DeviceInputType = new GraphQLInputObjectType({
         user:{
             type:GraphQLString
         },
-
+        records:{
+            type:GraphQLString
+        },
         marcaVehicle:{
             type:GraphQLString
         },
@@ -171,5 +188,8 @@ export const DeviceInputType = new GraphQLInputObjectType({
         conductorTel:{
             type:GraphQLString
         },
+        initTravel:{
+            type:GraphQLString
+        }
     })
 })

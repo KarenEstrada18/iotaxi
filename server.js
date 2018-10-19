@@ -5,6 +5,7 @@ import cors from 'cors';
 import User from './src/models/users';
 import Message from './src/models/messages';
 import Device from './src/models/devices';
+import Record from './src/models/records'
 import graphQLHTTP from 'express-graphql';
 import schema from './src/graphql';
 import {createToken} from './src/resolvers/create'
@@ -65,7 +66,6 @@ app.post('/login', (req,res) => {
 app.post('/createMessage',(req,res) => {
     let message = req.body
     console.log(message)
-    let dev = null
     
     Message.create(message).then((message) => {
         console.log(message.timestamp,"aqui chido")
@@ -74,9 +74,40 @@ app.post('/createMessage',(req,res) => {
 
         if(hora>= '4:00' && hora <='5:00'){
             console.log("ENTRO RESET")
-            Device.findOneAndUpdate({sigfox:message.device},{$set:{contEfectivo:0, contKm:0, contTime:0, contTravel:0}},(err,dev) => {
-                return dev
+            Device.findOne({sigfox:message.device}).exec((err,dev)=>{
+                console.log("Reset p1",dev)
+                let json = {
+                    "contEfectivo":dev.contEfectivo, 
+                    "contKm":dev.contKm, 
+                    "contTime":dev.contTime, 
+                    "contTravel":dev.contTravel, 
+                    "initTravel":dev.initTravel
+                }
+                Record.create(json).then((record)=>{
+                    console.log(record)
+                    Device.findOneAndUpdate({sigfox:message.device},{$push:{records:record._id}},(err,dev) => {
+                        return dev
+                    })    
+                    return record
+                })
+                Device.findOneAndUpdate({sigfox:message.device},{$set:{contEfectivo:0, contKm:0, contTime:0, contTravel:0, initTravel:[]}},(err,dev) => {
+                    return dev
+                })
             })
+            
+        }
+
+        if(message.data.length === 6){
+            console.log("entro",message)
+            let dispositivo = Device.findOne({sigfox:message.device}).exec((err,dev)=>{
+                console.log("DEVOLVIO 0",dev)
+                Device.findOneAndUpdate({sigfox:message.device},{$push:{initTravel:dev.lastLocation}},(err,dev) => {
+                    return dev
+                })
+                return dev;
+            })
+            console.log("DEVOLVIO",dispositivo)
+            /**/
         }
 
         if(message.data.length === 12){
