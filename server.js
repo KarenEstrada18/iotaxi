@@ -65,7 +65,20 @@ app.post('/login', (req,res) => {
 
 app.post('/createMessage',(req,res) => {
     let message = req.body
-    console.log(message)
+    console.log(message.device)
+
+    if(message.data.length === 6){
+        console.log("entro",message)
+        let dispositivo = Device.findOne({sigfox:message.device}).exec((err,dev)=>{
+            console.log("DEVOLVIO 0",dev)
+            Device.findOneAndUpdate({sigfox:message.device},{$push:{initTravel:dev.lastLocation}},(err,dev) => {
+                return dev
+            })
+            return dev;
+        })
+        console.log("DEVOLVIO",dispositivo)
+        /**/
+    }
     
     Message.create(message).then((message) => {
         console.log(message.timestamp,"aqui chido")
