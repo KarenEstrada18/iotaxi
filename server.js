@@ -107,8 +107,10 @@ app.post('/createMessage',(req,res) => {
             return dev;
         })
         console.log("DEVOLVIO",dispositivo)
-        /**/
     }
+
+
+
 
     if(message.data.length === 12){
         if(message.data.indexOf('00') === 0 || message.data.indexOf('01') === 0){
