@@ -105,14 +105,11 @@ app.post('/login', function (req, res) {
 //Analiza los mensajes
 app.post('/createMessage', function (req, res) {
     var message = req.body;
-    console.log(message.device);
-
-    console.log(message.timestamp, "aqui chido");
+    console.log(message);
     var hora = Unix_timestamp(message.timestamp);
-    console.log(hora);
 
     if (hora >= '4:00' && hora <= '5:00') {
-        console.log("ENTRO RESET");
+        console.log("Entro al corte del día");
         _devices2.default.findOne({ sigfox: message.device }).exec(function (err, dev) {
             console.log("Reset p1", dev);
             var json = {
@@ -136,20 +133,23 @@ app.post('/createMessage', function (req, res) {
     }
 
     if (message.data.length === 6) {
-        console.log("entro", message);
+        console.log("Entro un folio");
         var dispositivo = _devices2.default.findOne({ sigfox: message.device }).exec(function (err, dev) {
-            console.log("DEVOLVIO 0", dev);
+            console.log(dev, "Esta devolviendo un dispositivo");
             _devices2.default.findOneAndUpdate({ sigfox: message.device }, { $push: { initTravel: dev.lastLocation } }, function (err, dev) {
+                console.log("Actualizacion de inicio de viajes");
                 return dev;
             });
             return dev;
         });
-        console.log("DEVOLVIO", dispositivo);
+        console.log(dispositivo);
+        console.log("Salio del proceso de folio");
     }
 
     if (message.data.length === 12) {
+        console.log("entro una longitud 12");
         if (message.data.indexOf('00') === 0 || message.data.indexOf('01') === 0) {
-            console.log("entro");
+            console.log("entro totalizador");
             var pesos = message.data.substr(0, 4);
             var cent = message.data.substr(4, 2);
             var cash = Number(pesos + "." + cent);
@@ -162,6 +162,7 @@ app.post('/createMessage', function (req, res) {
             });
             console.log("salio");
         } else {
+            console.log("Entro una localización");
             _devices2.default.findOneAndUpdate({ sigfox: message.device }, { $set: { lastLocation: message.data } }, function (err, dev) {
                 return dev;
             });

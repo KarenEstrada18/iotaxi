@@ -66,14 +66,11 @@ app.post('/login', (req,res) => {
 //Analiza los mensajes
 app.post('/createMessage',(req,res) => {
     let message = req.body
-    console.log(message.device)
-
-    console.log(message.timestamp,"aqui chido")
+    console.log(message)
     let hora = Unix_timestamp(message.timestamp);
-    console.log(hora)
 
     if(hora>= '4:00' && hora <='5:00'){
-        console.log("ENTRO RESET")
+        console.log("Entro al corte del día")
         Device.findOne({sigfox:message.device}).exec((err,dev)=>{
             console.log("Reset p1",dev)
             let json = {
@@ -93,28 +90,30 @@ app.post('/createMessage',(req,res) => {
             Device.findOneAndUpdate({sigfox:message.device},{$set:{contEfectivo:0, contKm:0, contTime:0, contTravel:0, initTravel:[]}},(err,dev) => {
                 return dev
             })
-        })
-        
+        })    
     }
 
     if(message.data.length === 6){
-        console.log("entro",message)
+        console.log("Entro un folio")
         let dispositivo = Device.findOne({sigfox:message.device}).exec((err,dev)=>{
-            console.log("DEVOLVIO 0",dev)
+            console.log(dev, "Esta devolviendo un dispositivo")
             Device.findOneAndUpdate({sigfox:message.device},{$push:{initTravel:dev.lastLocation}},(err,dev) => {
+                console.log("Actualizacion de inicio de viajes")
                 return dev
             })
             return dev;
         })
-        console.log("DEVOLVIO",dispositivo)
+        console.log(dispositivo)
+        console.log("Salio del proceso de folio")
     }
 
 
 
 
     if(message.data.length === 12){
+        console.log("entro una longitud 12")
         if(message.data.indexOf('00') === 0 || message.data.indexOf('01') === 0){
-            console.log("entro")
+            console.log("entro totalizador")
             let pesos = message.data.substr(0,4);
             let cent = message.data.substr(4,2);
             let cash = Number(pesos+"."+cent);
@@ -129,6 +128,7 @@ app.post('/createMessage',(req,res) => {
             console.log("salio")
 
         }else{
+            console.log("Entro una localización")
             Device.findOneAndUpdate({sigfox:message.device},{$set:{lastLocation:message.data}}, (err,dev) => {
                 return dev
             })
