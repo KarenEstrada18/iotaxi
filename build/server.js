@@ -135,14 +135,13 @@ app.post('/createMessage', function (req, res) {
     if (message.data.length === 6) {
         console.log("Entro un folio");
         var dispositivo = _devices2.default.findOne({ sigfox: message.device }).exec(function (err, dev) {
-            console.log(dev, "Esta devolviendo un dispositivo");
+            console.log("Esta devolviendo un dispositivo");
             _devices2.default.findOneAndUpdate({ sigfox: message.device }, { $push: { initTravel: dev.lastLocation } }, function (err, dev) {
                 console.log("Actualizacion de inicio de viajes");
                 return dev;
             });
             return dev;
         });
-        console.log(dispositivo);
         console.log("Salio del proceso de folio");
     }
 
