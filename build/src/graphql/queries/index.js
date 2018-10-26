@@ -18,6 +18,10 @@ var _devices = require('./devices');
 
 var _devices2 = _interopRequireDefault(_devices);
 
+var _records = require('./records');
+
+var _records2 = _interopRequireDefault(_records);
+
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
-exports.default = _extends({}, _messages2.default, _users2.default, _devices2.default);
+exports.default = _extends({}, _messages2.default, _users2.default, _devices2.default, _records2.default);

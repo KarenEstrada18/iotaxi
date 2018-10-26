@@ -7,11 +7,11 @@ exports.DeviceInputType = exports.DeviceType = undefined;
 
 var _graphql = require('graphql');
 
-var _users = require('./users');
+var _records = require('./records');
 
-var _users2 = require('../../models/users');
+var _records2 = require('../../models/records');
 
-var _users3 = _interopRequireDefault(_users2);
+var _records3 = _interopRequireDefault(_records2);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -81,7 +81,12 @@ var DeviceType = exports.DeviceType = new _graphql.GraphQLObjectType({
             conductorTel: {
                 type: _graphql.GraphQLString
             },
-
+            velocidadMaxima: {
+                type: _graphql.GraphQLString
+            },
+            initTravel: {
+                type: (0, _graphql.GraphQLList)(_graphql.GraphQLString)
+            },
             lastLocation: {
                 type: _graphql.GraphQLString
             },
@@ -99,6 +104,16 @@ var DeviceType = exports.DeviceType = new _graphql.GraphQLObjectType({
             },
             user: {
                 type: _graphql.GraphQLString
+            },
+            records: {
+                type: (0, _graphql.GraphQLList)(_records.RecordType),
+                resolve: function resolve(device) {
+                    var records = device.records;
+
+                    return _records3.default.find({ _id: { $in: records } }).then(function (rec) {
+                        return rec;
+                    });
+                }
             },
             create_at: {
                 type: _graphql.GraphQLString
@@ -129,7 +144,9 @@ var DeviceInputType = exports.DeviceInputType = new _graphql.GraphQLInputObjectT
             user: {
                 type: _graphql.GraphQLString
             },
-
+            records: {
+                type: _graphql.GraphQLString
+            },
             marcaVehicle: {
                 type: _graphql.GraphQLString
             },
@@ -176,6 +193,9 @@ var DeviceInputType = exports.DeviceInputType = new _graphql.GraphQLInputObjectT
                 type: _graphql.GraphQLString
             },
             conductorTel: {
+                type: _graphql.GraphQLString
+            },
+            initTravel: {
                 type: _graphql.GraphQLString
             }
         };

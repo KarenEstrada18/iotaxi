@@ -28,6 +28,10 @@ var _devices = require('./src/models/devices');
 
 var _devices2 = _interopRequireDefault(_devices);
 
+var _records = require('./src/models/records');
+
+var _records2 = _interopRequireDefault(_records);
+
 var _expressGraphql = require('express-graphql');
 
 var _expressGraphql2 = _interopRequireDefault(_expressGraphql);
@@ -98,48 +102,71 @@ app.post('/login', function (req, res) {
     });
 });
 
+//Analiza los mensajes
 app.post('/createMessage', function (req, res) {
     var message = req.body;
-    console.log(message);
-    var dev = null;
+    console.log(message.device);
 
-    _messages2.default.create(message).then(function (message) {
-        console.log(message.timestamp, "aqui chido");
-        var hora = Unix_timestamp(message.timestamp);
-        console.log(hora);
+    console.log(message.timestamp, "aqui chido");
+    var hora = Unix_timestamp(message.timestamp);
+    console.log(hora);
 
-        if (hora >= '4:00' && hora <= '5:00') {
-            console.log("ENTRO RESET");
-            _devices2.default.findOneAndUpdate({ sigfox: message.device }, { $set: { contEfectivo: 0, contKm: 0, contTime: 0, contTravel: 0 } }, function (err, dev) {
+    if (hora >= '4:00' && hora <= '5:00') {
+        console.log("ENTRO RESET");
+        _devices2.default.findOne({ sigfox: message.device }).exec(function (err, dev) {
+            console.log("Reset p1", dev);
+            var json = {
+                "contEfectivo": dev.contEfectivo,
+                "contKm": dev.contKm,
+                "contTime": dev.contTime,
+                "contTravel": dev.contTravel,
+                "initTravel": dev.initTravel
+            };
+            _records2.default.create(json).then(function (record) {
+                console.log(record);
+                _devices2.default.findOneAndUpdate({ sigfox: message.device }, { $push: { records: record._id } }, function (err, dev) {
+                    return dev;
+                });
+                return record;
+            });
+            _devices2.default.findOneAndUpdate({ sigfox: message.device }, { $set: { contEfectivo: 0, contKm: 0, contTime: 0, contTravel: 0, initTravel: [] } }, function (err, dev) {
+                return dev;
+            });
+        });
+    }
+
+    if (message.data.length === 6) {
+        console.log("entro", message);
+        var dispositivo = _devices2.default.findOne({ sigfox: message.device }).exec(function (err, dev) {
+            console.log("DEVOLVIO 0", dev);
+            _devices2.default.findOneAndUpdate({ sigfox: message.device }, { $push: { initTravel: dev.lastLocation } }, function (err, dev) {
+                return dev;
+            });
+            return dev;
+        });
+        console.log("DEVOLVIO", dispositivo);
+    }
+
+    if (message.data.length === 12) {
+        if (message.data.indexOf('00') === 0 || message.data.indexOf('01') === 0) {
+            console.log("entro");
+            var pesos = message.data.substr(0, 4);
+            var cent = message.data.substr(4, 2);
+            var cash = Number(pesos + "." + cent);
+            var km = Number(message.data.substr(6, 3));
+            var time = Number(message.data.substr(9, 3));
+            console.log(cash, ",", km, ",", time);
+
+            _devices2.default.findOneAndUpdate({ sigfox: message.device }, { $inc: { contEfectivo: cash, contKm: km, contTime: time, contTravel: 1 } }, function (err, dev) {
+                return dev;
+            });
+            console.log("salio");
+        } else {
+            _devices2.default.findOneAndUpdate({ sigfox: message.device }, { $set: { lastLocation: message.data } }, function (err, dev) {
                 return dev;
             });
         }
-
-        if (message.data.length === 12) {
-            if (message.data.indexOf('00') === 0 || message.data.indexOf('01') === 0) {
-                console.log("entro");
-                var pesos = message.data.substr(0, 4);
-                var cent = message.data.substr(4, 2);
-                var cash = Number(pesos + "." + cent);
-                var km = Number(message.data.substr(6, 3));
-                var time = Number(message.data.substr(9, 3));
-                console.log(cash, ",", km, ",", time);
-
-                _devices2.default.findOneAndUpdate({ sigfox: message.device }, { $inc: { contEfectivo: cash, contKm: km, contTime: time, contTravel: 1 } }, function (err, dev) {
-                    return dev;
-                });
-                console.log("salio");
-            } else {
-                _devices2.default.findOneAndUpdate({ sigfox: message.device }, { $set: { lastLocation: message.data } }, function (err, dev) {
-                    return dev;
-                });
-            }
-        }
-        return res.status(201).json({ "message": "Mensaje creado", "id": message._id });
-    }).catch(function (err) {
-        console.log(err);
-        return res.json(err);
-    });
+    }
 });
 
 app.post('/updateMe', function (req, res) {
