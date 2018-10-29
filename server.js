@@ -106,9 +106,6 @@ app.post('/createMessage',(req,res) => {
         console.log("Salio del proceso de folio")
     }
 
-
-
-
     if(message.data.length === 12){
         console.log("entro una longitud 12")
         if(message.data.indexOf('00') === 0 || message.data.indexOf('01') === 0){
@@ -209,7 +206,7 @@ app.post("/me",(req,res) => {
     console.log("devices",devices)
     return devices;
 })
-
+/*
 app.use('/graphql',(req,res,next) => {
     const token  = req.headers['authorization'];
     try{
@@ -218,7 +215,7 @@ app.use('/graphql',(req,res,next) => {
     }catch(error){
         res.status(401).json({message:error.message})
     }
-})
+})*/
 
 app.use('/graphql',graphQLHTTP((req,res)=>({
     schema,
