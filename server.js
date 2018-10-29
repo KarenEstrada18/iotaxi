@@ -96,7 +96,7 @@ app.post('/createMessage',(req,res) => {
     if(message.data.length === 6){
         console.log("Entro un folio")
         let dispositivo = Device.findOne({sigfox:message.device}).exec((err,dev)=>{
-            console.log("Esta devolviendo un dispositivo")
+            console.log(dev.lastLocation), "LASTLOcAtion"
             Device.findOneAndUpdate({sigfox:message.device},{$push:{initTravel:dev.lastLocation}},(err,dev) => {
                 console.log("Actualizacion de inicio de viajes")
                 return dev
