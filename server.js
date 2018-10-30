@@ -44,8 +44,7 @@ app.use(cors());
 app.post('/signup',(req,res) => {
     let user = req.body
     User.create(user).then((user) => {
-        return res.status(201).json({"message":"Usuario Creado",
-            "id":user._id})
+        return res.status(201).json({"message":"Usuario Creado","id":user._id})
     }).catch((err) =>{
         console.log(err);
         return res.json(err);
@@ -63,11 +62,16 @@ app.post('/login', (req,res) => {
     })
 })
 
+
 //Analiza los mensajes
 app.post('/createMessage',(req,res) => {
     let message = req.body
     console.log(message)
     let hora = Unix_timestamp(message.timestamp);
+
+    let dispositivo = Device.findOne({sigfox:message.device}).exec()
+    console.log(dispositivo.device);
+    console.log(dispositivo)
 
     if(hora>= '4:00' && hora <='5:00'){
         console.log("Entro al corte del día")
@@ -96,14 +100,20 @@ app.post('/createMessage',(req,res) => {
     if(message.data.length === 6){
         console.log("Entro un folio")
         let dispositivo = Device.findOne({sigfox:message.device}).exec((err,dev)=>{
-            console.log(dev.lastLocation), "LASTLOcAtion"
-            Device.findOneAndUpdate({sigfox:message.device},{$push:{initTravel:dev.lastLocation}},(err,dev) => {
-                console.log("Actualizacion de inicio de viajes")
-                return dev
-            })
-            return dev;
+            if(dev.lastLocation != null){
+                console.log(dev.lastLocation)
+                Device.findOneAndUpdate({sigfox:message.device},{$push:{initTravel:dev.lastLocation}},(err,dev) => {
+                    console.log("Actualizacion de inicio de viajes")
+                    return dev
+                })
+                return dev;
+            }else{
+                return err
+            }
         })
+        
         console.log("Salio del proceso de folio")
+        return res.status(100).json({"message":"Mensaje procesado","Dispositivo":message.device})
     }
 
     if(message.data.length === 12){
@@ -116,7 +126,7 @@ app.post('/createMessage',(req,res) => {
             let km = Number(message.data.substr(6,3));
             let time = Number(message.data.substr(9,3));
             console.log(cash,",",km,",",time)
-            
+                
 
             Device.findOneAndUpdate({sigfox:message.device},{$inc:{contEfectivo:cash, contKm:km, contTime:time, contTravel:1}},(err,dev) => {
                 return dev
@@ -128,8 +138,10 @@ app.post('/createMessage',(req,res) => {
             Device.findOneAndUpdate({sigfox:message.device},{$set:{lastLocation:message.data}}, (err,dev) => {
                 return dev
             })
+            return res.status(100).json({"message":"Mensaje procesado","Dispositivo":message.device})
+
         }
-    } 
+    }
 })
 
 app.post('/updateMe',(req,res) => {
@@ -206,6 +218,7 @@ app.post("/me",(req,res) => {
     console.log("devices",devices)
     return devices;
 })
+
 
 app.use('/graphql',(req,res,next) => {
     const token  = req.headers['authorization'];
