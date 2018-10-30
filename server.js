@@ -217,6 +217,7 @@ app.use('/graphql',(req,res,next) => {
     }
 })
 
+
 app.use('/graphql',graphQLHTTP((req,res)=>({
     schema,
     graphiql:true,
