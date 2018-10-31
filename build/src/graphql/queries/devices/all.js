@@ -18,7 +18,7 @@ var queryAllDevices = {
 
     type: new _graphql.GraphQLList(_devices3.DeviceType),
     resolve: function resolve() {
-        var devices = _devices2.default.find().exec();
+        var devices = _devices2.default.find().sort('concesion').exec();
         if (!devices) throw new Error("Error al traer de la bd");
         return devices;
     }

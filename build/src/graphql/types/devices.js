@@ -110,7 +110,7 @@ var DeviceType = exports.DeviceType = new _graphql.GraphQLObjectType({
                 resolve: function resolve(device) {
                     var records = device.records;
 
-                    return _records3.default.find({ _id: { $in: records } }).then(function (rec) {
+                    return _records3.default.find({ _id: { $in: records } }).sort('concesion').then(function (rec) {
                         return rec;
                     });
                 }

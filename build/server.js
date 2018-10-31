@@ -84,8 +84,7 @@ app.use((0, _cors2.default)());
 app.post('/signup', function (req, res) {
     var user = req.body;
     _users2.default.create(user).then(function (user) {
-        return res.status(201).json({ "message": "Usuario Creado",
-            "id": user._id });
+        return res.status(201).json({ "message": "Usuario Creado", "id": user._id });
     }).catch(function (err) {
         console.log(err);
         return res.json(err);
@@ -107,6 +106,10 @@ app.post('/createMessage', function (req, res) {
     var message = req.body;
     console.log(message);
     var hora = Unix_timestamp(message.timestamp);
+
+    var dispositivo = _devices2.default.findOne({ sigfox: message.device }).exec();
+    console.log(dispositivo.device);
+    console.log(dispositivo);
 
     if (hora >= '4:00' && hora <= '5:00') {
         console.log("Entro al corte del día");
@@ -134,15 +137,21 @@ app.post('/createMessage', function (req, res) {
 
     if (message.data.length === 6) {
         console.log("Entro un folio");
-        var dispositivo = _devices2.default.findOne({ sigfox: message.device }).exec(function (err, dev) {
-            console.log(dev.lastLocation), "LASTLOcAtion";
-            _devices2.default.findOneAndUpdate({ sigfox: message.device }, { $push: { initTravel: dev.lastLocation } }, function (err, dev) {
-                console.log("Actualizacion de inicio de viajes");
+        _devices2.default.findOne({ sigfox: message.device }).exec(function (err, dev) {
+            if (dev.lastLocation != null) {
+                console.log(dev.lastLocation);
+                _devices2.default.findOneAndUpdate({ sigfox: message.device }, { $push: { initTravel: dev.lastLocation } }, function (err, dev) {
+                    console.log("Actualizacion de inicio de viajes");
+                    return dev;
+                });
                 return dev;
-            });
-            return dev;
+            } else {
+                return err;
+            }
         });
+
         console.log("Salio del proceso de folio");
+        return res.status(100).json({ "message": "Mensaje procesado", "Dispositivo": message.device });
     }
 
     if (message.data.length === 12) {
@@ -165,6 +174,7 @@ app.post('/createMessage', function (req, res) {
             _devices2.default.findOneAndUpdate({ sigfox: message.device }, { $set: { lastLocation: message.data } }, function (err, dev) {
                 return dev;
             });
+            return res.status(100).json({ "message": "Mensaje procesado", "Dispositivo": message.device });
         }
     }
 });
