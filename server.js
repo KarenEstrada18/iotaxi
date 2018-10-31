@@ -99,7 +99,7 @@ app.post('/createMessage',(req,res) => {
 
     if(message.data.length === 6){
         console.log("Entro un folio")
-        let dispositivo = Device.findOne({sigfox:message.device}).exec((err,dev)=>{
+        Device.findOne({sigfox:message.device}).exec((err,dev)=>{
             if(dev.lastLocation != null){
                 console.log(dev.lastLocation)
                 Device.findOneAndUpdate({sigfox:message.device},{$push:{initTravel:dev.lastLocation}},(err,dev) => {
@@ -218,7 +218,6 @@ app.post("/me",(req,res) => {
     console.log("devices",devices)
     return devices;
 })
-
 
 app.use('/graphql',(req,res,next) => {
     const token  = req.headers['authorization'];
