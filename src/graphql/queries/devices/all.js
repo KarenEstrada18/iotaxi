@@ -9,7 +9,7 @@ const queryAllDevices = {
 
     type:new GraphQLList(DeviceType),
     resolve(){
-        const devices = Device.find().sort('concesion',-1).exec()
+        const devices = Device.find().sort('concesion').exec()
         if(!devices) throw new Error  ("Error al traer de la bd")
         return devices
     }

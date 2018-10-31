@@ -105,7 +105,7 @@ export const DeviceType = new GraphQLObjectType({
             type:GraphQLList(RecordType),
             resolve(device){
                 const {records} = device
-                return Record.find({_id:{$in:records}}).then((rec) => {
+                return Record.find({_id:{$in:records}}).sort('concesion').then((rec) => {
                     return rec
                 })
             }
