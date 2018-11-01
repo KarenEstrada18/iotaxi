@@ -252,16 +252,16 @@ app.post("/me", function (req, res) {
     console.log("devices", devices);
     return devices;
 });
-/*
-app.use('/graphql',(req,res,next) => {
-    const token  = req.headers['authorization'];
-    try{
-        req.user = verifyToken(token)
+
+app.use('/graphql', function (req, res, next) {
+    var token = req.headers['authorization'];
+    try {
+        req.user = (0, _verify.verifyToken)(token);
         next();
-    }catch(error){
-        res.status(401).json({message:error.message})
+    } catch (error) {
+        res.status(401).json({ message: error.message });
     }
-})*/
+});
 
 app.use('/graphql', (0, _expressGraphql2.default)(function (req, res) {
     return {
