@@ -12,6 +12,10 @@ var _single = require('./single');
 
 var _single2 = _interopRequireDefault(_single);
 
+var _singleConcesion = require('./singleConcesion');
+
+var _singleConcesion2 = _interopRequireDefault(_singleConcesion);
+
 var _myDevices = require('./myDevices');
 
 var _myDevices2 = _interopRequireDefault(_myDevices);
@@ -21,5 +25,6 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
 exports.default = {
     allDevice: _all2.default,
     singleDevice: _single2.default,
-    myDevices: _myDevices2.default
+    myDevices: _myDevices2.default,
+    singleDeviceConcesion: _singleConcesion2.default
 };
