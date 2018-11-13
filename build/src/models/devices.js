@@ -76,13 +76,16 @@ var DeviceSchema = new Schema({
         type: String
     },
     "consuctorCC": {
-        type: String
+        type: String,
+        default: ""
     },
     "conductorCity": {
-        type: String
+        type: String,
+        default: ""
     },
     "conductorCountry": {
-        type: String
+        type: String,
+        default: ""
     },
     "velocidadMaxima": {
         type: String,
