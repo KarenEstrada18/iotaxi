@@ -75,17 +75,17 @@ var DeviceSchema = new Schema({
     "conductorTel": {
         type: String
     },
-    "consuctorCC": {
+    "conductorCC": {
         type: String,
-        default: ""
+        default: " "
     },
     "conductorCity": {
         type: String,
-        default: ""
+        default: " "
     },
     "conductorCountry": {
         type: String,
-        default: ""
+        default: " "
     },
     "velocidadMaxima": {
         type: String,
