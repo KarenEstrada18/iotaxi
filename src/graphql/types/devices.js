@@ -77,6 +77,15 @@ export const DeviceType = new GraphQLObjectType({
         conductorTel:{
             type:GraphQLString
         },
+        consuctorCC:{
+            type:GraphQLString
+        },
+        conductorCity:{
+            type:GraphQLString
+        },
+        conductorCountry:{
+            type:GraphQLString
+        },
         velocidadMaxima:{
             type:GraphQLString
         },
@@ -186,6 +195,15 @@ export const DeviceInputType = new GraphQLInputObjectType({
             type:GraphQLString
         },
         conductorTel:{
+            type:GraphQLString
+        },
+        consuctorCC:{
+            type:GraphQLString
+        },
+        conductorCity:{
+            type:GraphQLString
+        },
+        conductorCountry:{
             type:GraphQLString
         },
         initTravel:{

@@ -81,6 +81,15 @@ var DeviceType = exports.DeviceType = new _graphql.GraphQLObjectType({
             conductorTel: {
                 type: _graphql.GraphQLString
             },
+            consuctorCC: {
+                type: _graphql.GraphQLString
+            },
+            conductorCity: {
+                type: _graphql.GraphQLString
+            },
+            conductorCountry: {
+                type: _graphql.GraphQLString
+            },
             velocidadMaxima: {
                 type: _graphql.GraphQLString
             },
@@ -193,6 +202,15 @@ var DeviceInputType = exports.DeviceInputType = new _graphql.GraphQLInputObjectT
                 type: _graphql.GraphQLString
             },
             conductorTel: {
+                type: _graphql.GraphQLString
+            },
+            consuctorCC: {
+                type: _graphql.GraphQLString
+            },
+            conductorCity: {
+                type: _graphql.GraphQLString
+            },
+            conductorCountry: {
                 type: _graphql.GraphQLString
             },
             initTravel: {

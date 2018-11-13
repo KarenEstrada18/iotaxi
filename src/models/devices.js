@@ -65,6 +65,15 @@ const DeviceSchema = new Schema({
     "conductorTel":{
         type:String
     },
+    "consuctorCC":{
+        type:String
+    },
+    "conductorCity":{
+        type:String
+    },
+    "conductorCountry":{
+        type:String
+    },
     "velocidadMaxima":{
         type:String,
         default:0
