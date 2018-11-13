@@ -81,7 +81,7 @@ var DeviceType = exports.DeviceType = new _graphql.GraphQLObjectType({
             conductorTel: {
                 type: _graphql.GraphQLString
             },
-            consuctorCC: {
+            conductorCC: {
                 type: _graphql.GraphQLString
             },
             conductorCity: {
@@ -204,7 +204,7 @@ var DeviceInputType = exports.DeviceInputType = new _graphql.GraphQLInputObjectT
             conductorTel: {
                 type: _graphql.GraphQLString
             },
-            consuctorCC: {
+            conductorCC: {
                 type: _graphql.GraphQLString
             },
             conductorCity: {

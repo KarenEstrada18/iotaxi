@@ -77,7 +77,7 @@ export const DeviceType = new GraphQLObjectType({
         conductorTel:{
             type:GraphQLString
         },
-        consuctorCC:{
+        conductorCC:{
             type:GraphQLString
         },
         conductorCity:{
@@ -197,7 +197,7 @@ export const DeviceInputType = new GraphQLInputObjectType({
         conductorTel:{
             type:GraphQLString
         },
-        consuctorCC:{
+        conductorCC:{
             type:GraphQLString
         },
         conductorCity:{
