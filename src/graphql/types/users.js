@@ -57,7 +57,7 @@ export const UserType = new GraphQLObjectType({
             type:GraphQLList(DeviceType), 
             resolve(user){
                 const {devices} = user
-                return Device.find({_id:{$in:devices}}).then((dev) => {
+                return Device.find({_id:{$in:devices}}).sort('concesion').then((dev) => {
                     console.log(dev)
                     return dev
                 })
