@@ -39,7 +39,7 @@ var createToken = exports.createToken = function createToken(email, password) {
                         email: user.email,
                         id: user._id
                     };
-                    var token = _jsonwebtoken2.default.sign(payload, secret, { expiresIn: expiresIn });
+                    var token = _jsonwebtoken2.default.sign(payload, secret);
 
                     resolve(token);
                 } else {

@@ -25,7 +25,7 @@ export const createToken = function (email,password){
                         email:user.email,
                         id:user._id
                     }
-                    const token = jwt.sign(payload,secret,{expiresIn});
+                    const token = jwt.sign(payload,secret);
 
                     resolve(token)
                 }else{
