@@ -151,7 +151,7 @@ app.post('/createMessage', function (req, res) {
         });
 
         console.log("Salio del proceso de folio");
-        return res.status(100).json({ "message": "Mensaje procesado", "Dispositivo": message.device });
+        return res.status(201).json({ "message": "Mensaje procesado", "Dispositivo": message.device });
     }
 
     if (message.data.length === 12) {
@@ -174,7 +174,7 @@ app.post('/createMessage', function (req, res) {
             _devices2.default.findOneAndUpdate({ sigfox: message.device }, { $set: { lastLocation: message.data } }, function (err, dev) {
                 return dev;
             });
-            return res.status(100).json({ "message": "Mensaje procesado", "Dispositivo": message.device });
+            return res.status(201).json({ "message": "Mensaje procesado", "Dispositivo": message.device });
         }
     }
 });
